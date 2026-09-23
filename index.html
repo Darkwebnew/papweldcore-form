@@ -1,0 +1,1597 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0b1533" />
+    <title>PAP WELD CORE — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #0b1533;
+        --navy2: #132250;
+        --o: #f4511e;
+        --a: #f59e0b;
+        --t: #0ea5a4;
+        --b: #1d4ed8;
+        --p: #7c3aed;
+        --grad: linear-gradient(
+          135deg,
+          #f4511e,
+          #f59e0b 32%,
+          #1d4ed8 68%,
+          #7c3aed
+        );
+        --bg: #f2f4fa;
+        --card: #fff;
+        --line: #e4e8f2;
+        --tx: #0b1533;
+        --mu: #66728f;
+        --ok: #10b981;
+        --er: #ef4444;
+        --r: 16px;
+        --sh:
+          0 1px 2px rgba(11, 21, 51, 0.05), 0 8px 24px rgba(11, 21, 51, 0.06);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          14px/1.5 Inter,
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3,
+      .mont {
+        font-family: Montserrat, Inter, sans-serif;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 0;
+        background: none;
+        color: inherit;
+      }
+      input,
+      select,
+      textarea {
+        font: inherit;
+        width: 100%;
+        padding: 11px 13px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--tx);
+        outline: 0;
+        transition: 0.15s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--b);
+        box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.1);
+      }
+      textarea {
+        min-height: 84px;
+        resize: vertical;
+      }
+      .side {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 268px;
+        background: linear-gradient(180deg, var(--navy), #0a1230);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        z-index: 50;
+        transition: transform 0.3s;
+      }
+      .side::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: var(--grad);
+      }
+      .logo {
+        margin: 22px 16px 8px;
+        background: #fff;
+        border-radius: 14px;
+        padding: 12px 14px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      }
+      .logo img {
+        width: 100%;
+        height: auto;
+        max-height: 64px;
+        object-fit: contain;
+      }
+      .logo .fb {
+        display: none;
+        font: 800 15px Montserrat;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-align: center;
+      }
+      .nav {
+        flex: 1;
+        padding: 14px 12px;
+      }
+      .nav small {
+        display: block;
+        font: 700 10px Montserrat;
+        letter-spacing: 1.4px;
+        color: rgba(255, 255, 255, 0.35);
+        padding: 10px 12px 6px;
+      }
+      .nv {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 600;
+        margin-bottom: 4px;
+        text-align: left;
+        transition: 0.15s;
+      }
+      .nv:hover {
+        background: rgba(255, 255, 255, 0.07);
+        color: #fff;
+      }
+      .nv.on {
+        background: linear-gradient(
+          135deg,
+          rgba(244, 81, 30, 0.25),
+          rgba(124, 58, 237, 0.25)
+        );
+        color: #fff;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+      }
+      .nv b {
+        margin-left: auto;
+        background: var(--a);
+        color: var(--navy);
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 99px;
+      }
+      .sf {
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .bar {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 9px;
+        overflow: hidden;
+        margin-top: 6px;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--grad);
+        border-radius: 9px;
+        transition: width 0.4s;
+      }
+      .main {
+        margin-left: 268px;
+        min-height: 100vh;
+      }
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 28px;
+        background: rgba(242, 244, 250, 0.85);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--line);
+      }
+      .top h1 {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        flex: 1;
+      }
+      .top input {
+        max-width: 260px;
+        padding: 9px 13px;
+      }
+      .burger {
+        display: none;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: var(--navy);
+        color: #fff;
+        font-size: 18px;
+      }
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 13px;
+        border-radius: 99px;
+        background: #fff;
+        border: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      .pill i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--mu);
+      }
+      .pill.ok i {
+        background: var(--ok);
+      }
+      .pill.dirty i {
+        background: var(--a);
+        animation: pl 1s infinite;
+      }
+      .pill.err i {
+        background: var(--er);
+      }
+      .pill.sync i {
+        background: var(--b);
+        animation: pl 0.6s infinite;
+      }
+      @keyframes pl {
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .pg {
+        padding: 26px 28px 60px;
+        max-width: 1240px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 18px;
+        border-radius: 11px;
+        font-weight: 700;
+        font-size: 13px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+        transition: 0.15s;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--sh);
+      }
+      .btn.pri {
+        background: var(--grad);
+        color: #fff;
+        border: 0;
+        box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+      }
+      .btn.dk {
+        background: var(--navy);
+        color: #fff;
+        border-color: var(--navy);
+      }
+      .btn.dn {
+        color: #b91c1c;
+        background: #fef2f2;
+        border-color: #fecaca;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      }
+      .stats {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        margin-bottom: 22px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        box-shadow: var(--sh);
+      }
+      .stat {
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .stat::after {
+        content: "";
+        position: absolute;
+        right: -24px;
+        top: -24px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: var(--c);
+        opacity: 0.12;
+      }
+      .stat small {
+        color: var(--mu);
+        font-weight: 600;
+      }
+      .stat h2 {
+        font-size: 32px;
+        font-weight: 800;
+        margin-top: 4px;
+      }
+      .it {
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .it:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(11, 21, 51, 0.12);
+      }
+      .th {
+        height: 150px;
+        background: linear-gradient(135deg, #eef1fb, #e2e8f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        position: relative;
+      }
+      .th img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .bd {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--grad);
+        color: #fff;
+        font: 700 10px Montserrat;
+        padding: 4px 10px;
+        border-radius: 99px;
+      }
+      .ib {
+        padding: 14px 16px 16px;
+      }
+      .ib h3 {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .ib p {
+        color: var(--mu);
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      .pb {
+        height: 6px;
+        background: #eef1f8;
+        border-radius: 9px;
+        overflow: hidden;
+      }
+      .pb i {
+        display: block;
+        height: 100%;
+        background: var(--grad);
+      }
+      .pm {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--mu);
+        font-weight: 600;
+        margin-top: 6px;
+      }
+      .sec {
+        padding: 22px;
+        margin-bottom: 18px;
+      }
+      .sec h3 {
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .sec h3 span {
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        background: var(--grad);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+      }
+      .fg {
+        margin-bottom: 14px;
+      }
+      .fg > label {
+        display: block;
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 6px;
+        color: #334066;
+      }
+      .g2 {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr 1fr;
+      }
+      .cc {
+        text-align: right;
+        font-size: 11px;
+        color: var(--mu);
+        margin-top: 4px;
+      }
+      .cc.x {
+        color: var(--er);
+      }
+      .ln {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      .ln button {
+        width: 40px;
+        flex: none;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        color: var(--mu);
+      }
+      .ln button:hover {
+        background: #fef2f2;
+        color: var(--er);
+      }
+      .add {
+        width: 100%;
+        padding: 10px;
+        border: 1.5px dashed #a5b4fc;
+        border-radius: 10px;
+        background: #f5f7ff;
+        color: var(--b);
+        font-weight: 700;
+      }
+      .up {
+        position: relative;
+        border: 2px dashed #c7d0e6;
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+        background: #fafbff;
+        color: var(--mu);
+        transition: 0.15s;
+      }
+      .up:hover,
+      .up.dr {
+        border-color: var(--p);
+        background: #f6f2ff;
+      }
+      .up input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        padding: 0;
+      }
+      .tg {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .tb {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--navy);
+      }
+      .tb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .tb button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(11, 21, 51, 0.85);
+        color: #fff;
+      }
+      .edtop {
+        position: sticky;
+        top: 64px;
+        z-index: 30;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        margin-bottom: 18px;
+      }
+      .edtop h2 {
+        flex: 1;
+        font-size: 16px;
+        min-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .empty {
+        text-align: center;
+        padding: 70px 20px;
+        color: var(--mu);
+      }
+      .empty div {
+        font-size: 52px;
+        margin-bottom: 10px;
+      }
+      .pal {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .pal span {
+        width: 78px;
+        height: 54px;
+        border-radius: 12px;
+        color: #fff;
+        font: 700 10px Montserrat;
+        display: flex;
+        align-items: flex-end;
+        padding: 6px;
+        box-shadow: var(--sh);
+      }
+      .alert {
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #92400e;
+        font-size: 12.5px;
+        margin-bottom: 16px;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        transform: translate(-50%, 30px);
+        background: var(--navy);
+        color: #fff;
+        padding: 12px 22px;
+        border-radius: 99px;
+        font-weight: 600;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 200;
+        box-shadow: var(--sh);
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .toast.ok {
+        background: #047857;
+      }
+      .toast.er {
+        background: #b91c1c;
+      }
+      .ov {
+        display: none;
+      }
+      @media (max-width: 860px) {
+        .side {
+          transform: translateX(-100%);
+        }
+        .side.open {
+          transform: none;
+        }
+        .main {
+          margin-left: 0;
+        }
+        .burger {
+          display: block;
+        }
+        .ov.show {
+          display: block;
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 45;
+        }
+        .top {
+          padding: 12px 14px;
+        }
+        .top input {
+          display: none;
+        }
+        .pg {
+          padding: 16px 14px 60px;
+        }
+        .g2 {
+          grid-template-columns: 1fr;
+        }
+        .edtop {
+          top: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="side" id="side">
+      <div class="logo">
+        <img
+          src="images/logo.png"
+          alt="PAP Weld Core"
+          onerror="
+            this.style.display = 'none';
+            this.nextElementSibling.style.display = 'block';
+          "
+        />
+        <div class="fb">PAP WELD CORE</div>
+      </div>
+      <nav class="nav">
+        <small>MENU</small>
+        <button class="nv on" data-v="dash">📊 Dashboard</button>
+        <button class="nv" data-v="products">
+          📦 Products <b id="cp">0</b>
+        </button>
+        <button class="nv" data-v="services">
+          ⚙️ Services <b id="cs">0</b>
+        </button>
+        <small>SYSTEM</small>
+        <button class="nv" data-v="settings">🔐 GitHub &amp; Brand</button>
+      </nav>
+      <div class="sf">
+        <div class="row" style="justify-content: space-between">
+          <span>Data completion</span><b id="gp">0%</b>
+        </div>
+        <div class="bar"><i id="gb" style="width: 0"></i></div>
+      </div>
+    </aside>
+    <div class="ov" id="ov"></div>
+    <div class="main">
+      <div class="top">
+        <button class="burger" id="bg">☰</button>
+        <h1 id="ttl">Dashboard</h1>
+        <input id="q" placeholder="🔍 Search…" />
+        <div class="pill" id="pill"><i></i><span id="pt">Local</span></div>
+        <button class="btn pri" id="saveNow">💾 Save</button>
+      </div>
+      <div class="pg" id="pg"></div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* ---------- CONFIG (token is kept in this browser only — set it in Settings) ---------- */
+      const CK = "papweld_gh",
+        DB = "papweld_ps_v10",
+        OLD = "papweld_ps_v9";
+      let cfg = {
+        owner: "darkwebnew",
+        repo: "papweldcore-form",
+        branch: "main",
+        token: "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",
+        dataPath: "data.json",
+      };
+      try {
+        Object.assign(cfg, JSON.parse(localStorage.getItem(CK) || "{}"));
+      } catch (e) {}
+      const LOCAL_DELAY = 800,
+        CLOUD_DELAY = 5000,
+        MAXG = 10,
+        MAXS = 130;
+      const PCATS = [
+        "H-Beam Welding",
+        "Robotic Welding System",
+        "Robotic Welding Automation",
+        "Robotic Welding Cell",
+        "CNC Machines",
+        "PEB Beam Welding Automation",
+        "CNC Plate Drilling",
+        "Beam Welding Line",
+        "New Items",
+        "Custom / Other",
+      ];
+      const SCATS = [
+        "Machine Installation",
+        "Machine Commissioning",
+        "Annual Maintenance",
+        "Repair & Retrofit",
+        "Training & Support",
+        "Custom Automation Design",
+        "Consultation",
+        "Spare Parts Supply",
+        "Other Services",
+      ];
+      const BADGES = [
+        "",
+        "Best Seller",
+        "New Launch",
+        "Featured",
+        "Premium",
+        "Custom Build",
+      ];
+      const PAL = [
+        ["Flame", "#f4511e"],
+        ["Amber", "#f59e0b"],
+        ["Teal", "#0ea5a4"],
+        ["Royal", "#1d4ed8"],
+        ["Violet", "#7c3aed"],
+        ["Navy", "#0b1533"],
+      ];
+      const SAMPLES = {
+        product: {
+          name: "PTW - Pull Thru Welding Machine",
+          category: "H-Beam Welding",
+          badge: "Best Seller",
+          shortDescription:
+            "Continuous pull-through SAW welding system for high-speed H-beam fabrication.",
+          description: {
+            p1: "Fully automatic H-beam welding system using Submerged Arc Welding for deep-penetration flange-to-web welds.",
+            p2: "Beams are pulled through the welding station at controlled speed while dual SAW heads weld both sides. PLC manages speed, arc and flux recovery.",
+            p3: "No idle time between beams, quick changeover, minimal cleanup and Chennai-based service.",
+          },
+          specifications: [
+            { label: "Welding Process", value: "SAW (Submerged Arc)" },
+            { label: "Max Beam Height", value: "800 mm" },
+            { label: "Control System", value: "PLC Based" },
+            { label: "Power Supply", value: "440V, 3-Phase" },
+          ],
+          features: [
+            "Continuous pull-through design",
+            "Deep penetration SAW welds",
+            "PLC-based programmable settings",
+            "12-month parts warranty",
+          ],
+          applications: ["Structural Steel", "PEB", "Heavy Fabrication"],
+        },
+        service: {
+          name: "Annual Maintenance Contract (AMC)",
+          category: "Annual Maintenance",
+          badge: "Featured",
+          priceDisplay: "₹85,000 / year",
+          shortDescription:
+            "Preventive + breakdown maintenance for all PAP Weld equipment.",
+          description: {
+            p1: "Comprehensive service package keeping your equipment at peak performance all year.",
+            p2: "Quarterly preventive visits, 48-hour breakdown response and priority spares from Chennai stock.",
+            p3: "Less downtime, longer equipment life and documented service records.",
+          },
+          specifications: [
+            { label: "Duration", value: "12 months" },
+            { label: "Preventive Visits", value: "4 per year" },
+            { label: "Breakdown Response", value: "Within 48 hours" },
+          ],
+          features: [
+            "4 preventive visits per year",
+            "48-hour breakdown response",
+            "Remote PLC/CNC diagnostics",
+          ],
+          applications: [
+            "H-Beam Welding Machines",
+            "Robotic Welding Systems",
+            "CNC Machines",
+          ],
+        },
+      };
+
+      let S = { products: [], services: [] },
+        view = "dash",
+        activeId = null,
+        q = "",
+        dirty = false,
+        saving = false,
+        lastSave = null,
+        tL,
+        tC;
+      const $ = (s) => document.querySelector(s),
+        esc = (s) =>
+          String(s == null ? "" : s).replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+      const uid = () =>
+        "id_" +
+        Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 6);
+      const slug = (s) =>
+        String(s || "")
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 60) || "item";
+      const RAW = (p) =>
+        `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${p}`;
+      const src = (i) => (i ? i.dataUrl || i.url || "" : "");
+      const cloud = () => !!(cfg.owner && cfg.repo && cfg.token);
+      let toastT;
+      function toast(m, t) {
+        const e = $("#toast");
+        e.textContent = m;
+        e.className = "toast show " + (t || "");
+        clearTimeout(toastT);
+        toastT = setTimeout(() => (e.className = "toast"), 2800);
+      }
+
+      /* ---------- MODEL ---------- */
+      function mk(type, p) {
+        p = p || {};
+        return hyd({
+          id: uid(),
+          type,
+          name: p.name,
+          category: p.category,
+          badge: p.badge,
+          priceDisplay: p.priceDisplay,
+          shortDescription: p.shortDescription,
+          description: p.description && { ...p.description },
+          specifications:
+            p.specifications && p.specifications.map((x) => ({ ...x })),
+          features: p.features && [...p.features],
+          applications: p.applications && [...p.applications],
+          isSample: !!p.isSample,
+        });
+      }
+      function hyd(i) {
+        i.id = i.id || uid();
+        i.name = i.name || "";
+        i.category = i.category || "";
+        i.badge = i.badge || "";
+        i.priceDisplay = i.priceDisplay || "";
+        i.shortDescription = i.shortDescription || "";
+        const d = i.description || {};
+        i.description = { p1: d.p1 || "", p2: d.p2 || "", p3: d.p3 || "" };
+        if (!Array.isArray(i.specifications) || !i.specifications.length)
+          i.specifications = [{ label: "", value: "" }];
+        if (!Array.isArray(i.features) || !i.features.length) i.features = [""];
+        if (!Array.isArray(i.applications) || !i.applications.length)
+          i.applications = [""];
+        i.images = i.images || { main: null, gallery: [] };
+        i.images.gallery = i.images.gallery || [];
+        i.brochure = i.brochure || null;
+        return i;
+      }
+      const pct = (i) =>
+        Math.round(
+          ([
+            i.name.trim(),
+            i.category,
+            i.shortDescription.trim(),
+            i.description.p1 || i.description.p2 || i.description.p3,
+            i.specifications.some((s) => s.label && s.value),
+            i.features.some((f) => f.trim()),
+            i.applications.some((a) => a.trim()),
+            i.images.main,
+          ].filter(Boolean).length /
+            8) *
+            100,
+        );
+      const all = () => [...S.products, ...S.services];
+      const cur = () => all().find((i) => i.id === activeId);
+
+      function saveLocal() {
+        try {
+          let j = JSON.stringify(S);
+          if (j.length > 4.5e6) {
+            const lt = (x) => ({
+              ...x,
+              images: {
+                main:
+                  x.images.main && x.images.main.url
+                    ? { ...x.images.main, dataUrl: null }
+                    : null,
+                gallery: x.images.gallery
+                  .filter((g) => g.url)
+                  .map((g) => ({ ...g, dataUrl: null })),
+              },
+              brochure: null,
+            });
+            j = JSON.stringify({
+              products: S.products.map(lt),
+              services: S.services.map(lt),
+            });
+          }
+          localStorage.setItem(DB, j);
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      function loadLocal() {
+        try {
+          const r = localStorage.getItem(DB) || localStorage.getItem(OLD);
+          if (r) {
+            const p = JSON.parse(r);
+            S.products = (p.products || []).map(hyd);
+            S.services = (p.services || []).map(hyd);
+          }
+        } catch (e) {}
+      }
+
+      /* ---------- AUTOSAVE ---------- */
+      function touch() {
+        dirty = true;
+        clearTimeout(tL);
+        tL = setTimeout(saveLocal, LOCAL_DELAY);
+        pill();
+        if (cloud()) {
+          clearTimeout(tC);
+          tC = setTimeout(() => ghSave(false), CLOUD_DELAY);
+        }
+      }
+      function pill(state, txt) {
+        const p = $("#pill");
+        let c = "",
+          t;
+        if (saving) {
+          c = "sync";
+          t = "Saving…";
+        } else if (state === "err") {
+          c = "err";
+          t = txt || "Save failed";
+        } else if (dirty) {
+          c = "dirty";
+          t = cloud() ? "Unsaved · autosave soon" : "Unsaved · local only";
+        } else if (!cloud()) {
+          t = "Local mode";
+        } else {
+          c = "ok";
+          t = lastSave
+            ? "Saved " +
+              lastSave.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "GitHub connected";
+        }
+        p.className = "pill " + c;
+        $("#pt").textContent = t;
+      }
+
+      /* ---------- GITHUB ---------- */
+      const H = () => ({
+        Authorization: "Bearer " + cfg.token,
+        Accept: "application/vnd.github+json",
+      });
+      const API = (p) =>
+        `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${p}`;
+      async function ghGet(p) {
+        const r = await fetch(API(p) + "?ref=" + cfg.branch, {
+          headers: H(),
+          cache: "no-store",
+        });
+        if (r.status === 404) return null;
+        if (!r.ok) throw Error(p + " → HTTP " + r.status);
+        return r.json();
+      }
+      async function ghPut(p, b64, sha) {
+        const r = await fetch(API(p), {
+          method: "PUT",
+          headers: { ...H(), "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: "Update " + p,
+            content: b64,
+            branch: cfg.branch,
+            ...(sha ? { sha } : {}),
+          }),
+        });
+        if (!r.ok) {
+          let m = "";
+          try {
+            m = (await r.json()).message;
+          } catch (e) {}
+          throw Error(p + " → HTTP " + r.status + " " + m);
+        }
+        return r.json();
+      }
+      async function upload(obj, path) {
+        if (!obj || !obj.dataUrl || obj.up === obj.dataUrl.length) return;
+        const ex = await ghGet(path).catch(() => null);
+        await ghPut(path, obj.dataUrl.split(",")[1], ex && ex.sha);
+        obj.url = RAW(path);
+        obj.up = obj.dataUrl.length;
+      }
+      function clean(i, inline) {
+        const f = (o) =>
+          o && {
+            filename: o.filename || "",
+            url: o.url || null,
+            ...(inline && o.dataUrl ? { dataUrl: o.dataUrl } : {}),
+          };
+        return {
+          id: i.id,
+          slug: slug(i.name),
+          type: i.type,
+          name: i.name.trim(),
+          category: i.category,
+          badge: i.badge || null,
+          priceDisplay: i.priceDisplay || null,
+          shortDescription: i.shortDescription.trim(),
+          description: {
+            paragraph1: i.description.p1.trim(),
+            paragraph2: i.description.p2.trim(),
+            paragraph3: i.description.p3.trim(),
+          },
+          specifications: i.specifications
+            .filter((s) => s.label.trim() || s.value.trim())
+            .map((s) => ({ label: s.label.trim(), value: s.value.trim() })),
+          keyFeatures: i.features.map((x) => x.trim()).filter(Boolean),
+          applications: i.applications.map((x) => x.trim()).filter(Boolean),
+          images: { main: f(i.images.main), gallery: i.images.gallery.map(f) },
+          brochure: f(i.brochure),
+          completion: pct(i),
+          linkedFrom: null,
+        };
+      }
+      const payload = (inline) => ({
+        meta: {
+          company: "PAP WELD CORE AUTOMATION PRIVATE LIMITED",
+          cin: "U25910TN2025PTC180645",
+          gstin: "33AAPCP7917D1Z9",
+          website: "papweld.com",
+          generatedAt: new Date().toISOString(),
+          totalProducts: S.products.length,
+          totalServices: S.services.length,
+        },
+        products: S.products.map((i) => clean(i, inline)),
+        services: S.services.map((i) => clean(i, inline)),
+      });
+
+      async function ghSave(manual) {
+        if (!cloud()) {
+          if (manual) {
+            toast("Add your GitHub token in Settings", "er");
+            setView("settings");
+          }
+          return;
+        }
+        if (saving) {
+          return;
+        }
+        const bad = all().find((i) => !i.name.trim());
+        if (bad && manual)
+          toast(
+            'Tip: "' + bad.type + '" without a name was saved as Untitled',
+            "",
+          );
+        saving = true;
+        pill();
+        clearTimeout(tC);
+        try {
+          for (const i of all()) {
+            await upload(i.images.main, `images/${i.id}-main.jpg`);
+            for (let k = 0; k < i.images.gallery.length; k++)
+              await upload(
+                i.images.gallery[k],
+                `images/${i.id}-gallery-${k + 1}.jpg`,
+              );
+            if (
+              i.brochure &&
+              i.brochure.dataUrl &&
+              i.brochure.up !== i.brochure.dataUrl.length
+            ) {
+              const p = `brochures/${i.id}.pdf`;
+              const ex = await ghGet(p).catch(() => null);
+              await ghPut(p, i.brochure.dataUrl.split(",")[1], ex && ex.sha);
+              i.brochure.url = RAW(p);
+              i.brochure.up = i.brochure.dataUrl.length;
+            }
+          }
+          const b64 = btoa(
+            unescape(
+              encodeURIComponent(JSON.stringify(payload(false), null, 2)),
+            ),
+          );
+          const ex = await ghGet(cfg.dataPath).catch(() => null);
+          await ghPut(cfg.dataPath, b64, ex && ex.sha);
+          saveLocal();
+          dirty = false;
+          lastSave = new Date();
+          saving = false;
+          pill();
+          if (manual) toast("Saved to GitHub ✓", "ok");
+        } catch (e) {
+          console.warn(e);
+          saving = false;
+          dirty = true;
+          pill("err", "Save failed");
+          toast(e.message.slice(0, 70), "er");
+          if (view === "products" || view === "services") 0;
+        }
+      }
+      async function ghLoad() {
+        if (!cloud()) return toast("Add your GitHub token first", "er");
+        if (dirty && !confirm("Unsaved changes will be replaced. Continue?"))
+          return;
+        try {
+          const f = await ghGet(cfg.dataPath);
+          if (!f) return toast("No data.json in repo yet", "er");
+          const raw = JSON.parse(
+            decodeURIComponent(escape(atob(f.content.replace(/\n/g, "")))),
+          );
+          const rc = (r, t) =>
+            hyd({
+              id: r.id,
+              type: t,
+              name: r.name,
+              category: r.category,
+              badge: r.badge,
+              priceDisplay: r.priceDisplay,
+              shortDescription: r.shortDescription,
+              description: {
+                p1: r.description?.paragraph1,
+                p2: r.description?.paragraph2,
+                p3: r.description?.paragraph3,
+              },
+              specifications: r.specifications,
+              features: r.keyFeatures,
+              applications: r.applications,
+              images: {
+                main: r.images?.main
+                  ? { ...r.images.main, dataUrl: null }
+                  : null,
+                gallery: (r.images?.gallery || []).map((g) => ({
+                  ...g,
+                  dataUrl: null,
+                })),
+              },
+              brochure: r.brochure ? { ...r.brochure, dataUrl: null } : null,
+            });
+          S.products = (raw.products || []).map((r) => rc(r, "product"));
+          S.services = (raw.services || []).map((r) => rc(r, "service"));
+          saveLocal();
+          dirty = false;
+          lastSave = new Date();
+          activeId = null;
+          render();
+          toast("Loaded from GitHub ✓", "ok");
+        } catch (e) {
+          toast("Load failed: " + e.message.slice(0, 60), "er");
+        }
+      }
+
+      /* ---------- VIEWS ---------- */
+      const TITLES = {
+        dash: "Dashboard",
+        products: "Products",
+        services: "Services",
+        settings: "GitHub & Brand",
+      };
+      function setView(v) {
+        view = v;
+        activeId = null;
+        q = "";
+        $("#q").value = "";
+        render();
+        $("#side").classList.remove("open");
+        $("#ov").classList.remove("show");
+        scrollTo(0, 0);
+      }
+      function render() {
+        $("#cp").textContent = S.products.length;
+        $("#cs").textContent = S.services.length;
+        document
+          .querySelectorAll(".nv")
+          .forEach((b) => b.classList.toggle("on", b.dataset.v === view));
+        const a = all(),
+          g = a.length
+            ? Math.round(a.reduce((s, i) => s + pct(i), 0) / a.length)
+            : 0;
+        $("#gp").textContent = g + "%";
+        $("#gb").style.width = g + "%";
+        $("#ttl").textContent = activeId
+          ? "Edit " + (cur()?.type === "service" ? "Service" : "Product")
+          : TITLES[view];
+        $("#pg").innerHTML =
+          activeId && cur()
+            ? editor(cur())
+            : view === "dash"
+              ? dash(a, g)
+              : view === "settings"
+                ? settings()
+                : list(view);
+        pill();
+      }
+      function card(i) {
+        const s = src(i.images.main),
+          p = pct(i);
+        return `<div class="card it" data-open="${i.id}"><div class="th">${s ? `<img src="${s}" loading="lazy">` : i.type === "service" ? "⚙️" : "📦"}${i.badge ? `<span class="bd">${esc(i.badge)}</span>` : ""}</div>
+ <div class="ib"><h3>${esc(i.name || "Untitled " + i.type)}</h3><p>${esc(i.category || "No category")}${i.priceDisplay ? " · " + esc(i.priceDisplay) : ""}</p><div class="pb"><i style="width:${p}%"></i></div><div class="pm"><span>Completion</span><span>${p}%</span></div></div></div>`;
+      }
+      function dash(a, g) {
+        const low = a.filter((i) => pct(i) < 80);
+        return `<div class="stats">
+ <div class="card stat" style="--c:var(--o)"><small>Products</small><h2>${S.products.length}</h2></div>
+ <div class="card stat" style="--c:var(--b)"><small>Services</small><h2>${S.services.length}</h2></div>
+ <div class="card stat" style="--c:var(--t)"><small>Avg. completion</small><h2>${g}%</h2></div>
+ <div class="card stat" style="--c:var(--p)"><small>Needs attention</small><h2>${low.length}</h2></div></div>
+ ${cloud() ? "" : '<div class="alert">⚠️ GitHub is not connected — changes are saved in this browser only. Open <b>GitHub &amp; Brand</b> to add your token.</div>'}
+ <div class="row" style="margin-bottom:18px"><button class="btn pri" data-new="product">＋ New Product</button><button class="btn dk" data-new="service">＋ New Service</button>
+ <button class="btn" data-act="load">⬇ Load from GitHub</button><button class="btn" data-act="dl">⬇ Download JSON</button><button class="btn" data-act="copy">📋 Copy JSON</button>
+ <button class="btn" data-act="samples">📌 Load samples</button></div>
+ ${low.length ? `<h3 class="mont" style="margin-bottom:12px">Finish these next</h3><div class="grid">${low.slice(0, 6).map(card).join("")}</div>` : a.length ? "" : '<div class="empty"><div>🚀</div><h3>Nothing here yet</h3><p>Add your first product or load the samples.</p></div>'}`;
+      }
+      function list(v) {
+        const t = v === "products" ? "product" : "service",
+          L = (t === "product" ? S.products : S.services).filter(
+            (i) => !q || i.name.toLowerCase().includes(q.toLowerCase()),
+          );
+        return `<div class="row" style="justify-content:space-between;margin-bottom:18px"><p style="color:var(--mu)">${t === "product" ? "Machines and equipment you manufacture" : "Installation, maintenance, training & custom work"}</p><button class="btn pri" data-new="${t}">＋ Add ${t === "product" ? "Product" : "Service"}</button></div>
+ ${L.length ? `<div class="grid">${L.map(card).join("")}</div>` : `<div class="empty"><div>${t === "product" ? "📦" : "⚙️"}</div><h3>No ${v} found</h3></div>`}`;
+      }
+      function lines(i, key, ph, two) {
+        return (
+          i[key]
+            .map(
+              (x, n) =>
+                `<div class="ln">${two ? `<input data-l="${key}" data-k="label" data-i="${n}" value="${esc(x.label)}" placeholder="Label"><input data-l="${key}" data-k="value" data-i="${n}" value="${esc(x.value)}" placeholder="Value">` : `<input data-l="${key}" data-i="${n}" value="${esc(x)}" placeholder="${ph}">`}<button data-del="${key}" data-i="${n}">✕</button></div>`,
+            )
+            .join("") + `<button class="add" data-add="${key}">＋ Add</button>`
+        );
+      }
+      function editor(i) {
+        const sv = i.type === "service",
+          cats = sv ? SCATS : PCATS,
+          ms = src(i.images.main);
+        const F = (k, l, ph, ex) =>
+          `<div class="fg"><label>${l}</label><input data-f="${k}" value="${esc(i[k])}" placeholder="${ph}" ${ex || ""}></div>`;
+        return `<div class="card edtop"><button class="btn" data-act="back">← Back</button><h2>${esc(i.name || "Untitled")}</h2>
+ <button class="btn" data-act="dup">⧉ Duplicate</button><button class="btn dn" data-act="del">🗑 Delete</button><button class="btn pri" data-act="save">💾 Save</button></div>
+ <div class="card sec"><h3><span>1</span>Basic info</h3>${F("name", (sv ? "Service" : "Product") + " name *", "e.g. PTW - Pull Thru Welding Machine")}
+ <div class="g2"><div class="fg"><label>Category</label><select data-f="category"><option value="">— Select —</option>${cats.map((c) => `<option ${i.category === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+ <div class="fg"><label>Badge</label><select data-f="badge">${BADGES.map((b) => `<option value="${b}" ${i.badge === b ? "selected" : ""}>${b || "— None —"}</option>`).join("")}</select></div></div>
+ ${F("priceDisplay", (sv ? "Rate" : "Price") + " (blank = hidden)", "e.g. ₹85,000 / year")}
+ <div class="fg"><label>Short description (max ${MAXS})</label><input data-f="shortDescription" maxlength="180" value="${esc(i.shortDescription)}"><div class="cc ${i.shortDescription.length > MAXS ? "x" : ""}" id="cc">${i.shortDescription.length} / ${MAXS}</div></div></div>
+ <div class="card sec"><h3><span>2</span>Full description</h3>
+ ${[
+   ["p1", sv ? "What is this service?" : "What is this machine?"],
+   ["p2", "How does it work?"],
+   ["p3", "Why choose this?"],
+ ]
+   .map(
+     ([k, l]) =>
+       `<div class="fg"><label>${l}</label><textarea data-f="description.${k}">${esc(i.description[k])}</textarea></div>`,
+   )
+   .join("")}</div>
+ <div class="card sec"><h3><span>3</span>${sv ? "Service details" : "Specifications"}</h3>${lines(i, "specifications", "", 1)}</div>
+ <div class="card sec"><h3><span>4</span>Key features</h3>${lines(i, "features", "Feature")}</div>
+ <div class="card sec"><h3><span>5</span>Applications / industries</h3>${lines(i, "applications", "e.g. PEB")}</div>
+ <div class="card sec"><h3><span>6</span>Photos</h3>
+ <div class="fg"><label>Main photo</label><div class="up">📷 Tap or drop main photo<input type="file" accept="image/*" data-up="main"></div>${ms ? `<div class="tg"><div class="tb"><img src="${ms}"><button data-act="rmMain">✕</button></div></div>` : ""}</div>
+ <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up">🖼️ Add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
+ <div class="tg">${i.images.gallery.map((g, n) => `<div class="tb"><img src="${src(g)}"><button data-rg="${n}">✕</button></div>`).join("")}</div></div></div>
+ <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${i.brochure ? esc(i.brochure.filename || "brochure.pdf") + " attached — tap to replace" : "Tap to attach PDF (optional)"}<input type="file" accept="application/pdf" data-up="brochure"></div>${i.brochure ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro">Remove</button>' : ""}</div>`;
+      }
+      function settings() {
+        return `<div class="card sec"><h3><span>🔐</span>GitHub connection</h3>
+ <div class="alert">Your token is stored only in this browser (localStorage), never in the code. Use a <b>fine-grained token</b> limited to this one repo with <b>Contents: Read &amp; write</b>. Keep this admin page private — don't host it publicly.</div>
+ <div class="g2"><div class="fg"><label>Owner</label><input id="c_owner" value="${esc(cfg.owner)}"></div><div class="fg"><label>Repository</label><input id="c_repo" value="${esc(cfg.repo)}"></div>
+ <div class="fg"><label>Branch</label><input id="c_branch" value="${esc(cfg.branch)}"></div><div class="fg"><label>Data file</label><input id="c_dataPath" value="${esc(cfg.dataPath)}"></div></div>
+ <div class="fg"><label>Personal access token</label><input id="c_token" type="password" value="${esc(cfg.token)}" placeholder="github_pat_…"></div>
+ <div class="row"><button class="btn pri" data-act="cfg">Save settings</button><button class="btn" data-act="test">Test connection</button></div></div>
+ <div class="card sec"><h3><span>🎨</span>Brand palette (from your logo)</h3><div class="pal">${PAL.map(([n, c]) => `<span style="background:${c}">${n}<br>${c}</span>`).join("")}</div>
+ <p style="color:var(--mu);margin-top:12px;font-size:12.5px">Logo file: <code>images/logo.png</code> (shown on a white tile so the navy text stays readable).</p></div>`;
+      }
+
+      /* ---------- EVENTS ---------- */
+      document.addEventListener("click", async (e) => {
+        const t = e.target,
+          c = (s) => t.closest(s);
+        if (c(".nv") && c(".nv").dataset.v) return setView(c(".nv").dataset.v);
+        if (c("#bg")) {
+          $("#side").classList.toggle("open");
+          $("#ov").classList.toggle("show");
+          return;
+        }
+        if (c("#ov")) {
+          $("#side").classList.remove("open");
+          $("#ov").classList.remove("show");
+          return;
+        }
+        if (c("#saveNow")) return ghSave(true);
+        if (c("[data-new]")) {
+          const ty = c("[data-new]").dataset.new,
+            it = mk(ty);
+          (ty === "product" ? S.products : S.services).push(it);
+          view = ty + "s";
+          activeId = it.id;
+          touch();
+          render();
+          setTimeout(() => $("[data-f=name]")?.focus(), 80);
+          return;
+        }
+        if (c("[data-open]")) {
+          const id = c("[data-open]").dataset.open,
+            it = all().find((x) => x.id === id);
+          view = it.type + "s";
+          activeId = id;
+          render();
+          scrollTo(0, 0);
+          return;
+        }
+        const i = cur(),
+          d = t.closest("[data-del]"),
+          ad = t.closest("[data-add]"),
+          rg = t.closest("[data-rg]"),
+          a = c("[data-act]")?.dataset.act;
+        if (i && d) {
+          const L = i[d.dataset.del];
+          L.splice(+d.dataset.i, 1);
+          if (!L.length)
+            L.push(
+              d.dataset.del === "specifications"
+                ? { label: "", value: "" }
+                : "",
+            );
+          touch();
+          render();
+          return;
+        }
+        if (i && ad) {
+          i[ad.dataset.add].push(
+            ad.dataset.add === "specifications" ? { label: "", value: "" } : "",
+          );
+          touch();
+          render();
+          return;
+        }
+        if (i && rg) {
+          i.images.gallery.splice(+rg.dataset.rg, 1);
+          touch();
+          render();
+          return;
+        }
+        if (!a) return;
+        if (a === "back") {
+          activeId = null;
+          render();
+        } else if (a === "save")
+          ghSave(true).then(() => {
+            if (!cloud()) toast("Saved locally ✓", "ok");
+          });
+        else if (
+          a === "del" &&
+          i &&
+          confirm(
+            'Delete "' + (i.name || "Untitled") + '"? This cannot be undone.',
+          )
+        ) {
+          const L = i.type === "product" ? S.products : S.services;
+          L.splice(L.indexOf(i), 1);
+          activeId = null;
+          touch();
+          render();
+          toast("Deleted");
+        } else if (a === "dup" && i) {
+          const n = JSON.parse(JSON.stringify(i));
+          n.id = uid();
+          n.name += " (copy)";
+          n.isSample = false;
+          (i.type === "product" ? S.products : S.services).push(n);
+          activeId = n.id;
+          touch();
+          render();
+          toast("Duplicated", "ok");
+        } else if (a === "rmMain" && i) {
+          i.images.main = null;
+          touch();
+          render();
+        } else if (a === "rmBro" && i) {
+          i.brochure = null;
+          touch();
+          render();
+        } else if (a === "load") ghLoad();
+        else if (a === "dl") {
+          const b = new Blob([JSON.stringify(payload(true), null, 2)], {
+              type: "application/json",
+            }),
+            l = document.createElement("a");
+          l.href = URL.createObjectURL(b);
+          l.download = "papweld-products-services.json";
+          l.click();
+          toast("Downloaded", "ok");
+        } else if (a === "copy") {
+          try {
+            await navigator.clipboard.writeText(
+              JSON.stringify(payload(true), null, 2),
+            );
+            toast("Copied", "ok");
+          } catch (_) {
+            toast("Copy failed", "er");
+          }
+        } else if (a === "samples") {
+          [
+            ["product", S.products],
+            ["service", S.services],
+          ].forEach(([ty, L]) => {
+            if (!L.some((x) => x.isSample))
+              L.unshift(mk(ty, { ...SAMPLES[ty], isSample: true }));
+          });
+          touch();
+          render();
+          toast("Samples loaded", "ok");
+        } else if (a === "cfg" || a === "test") {
+          ["owner", "repo", "branch", "dataPath", "token"].forEach(
+            (k) => (cfg[k] = $("#c_" + k).value.trim()),
+          );
+          localStorage.setItem(CK, JSON.stringify(cfg));
+          pill();
+          if (a === "cfg") toast("Settings saved", "ok");
+          else
+            try {
+              const r = await fetch(
+                `https://api.github.com/repos/${cfg.owner}/${cfg.repo}`,
+                { headers: H() },
+              );
+              const j = await r.json();
+              toast(
+                r.ok
+                  ? j.permissions && j.permissions.push
+                    ? "Connected ✓ write access"
+                    : "Connected, but read-only"
+                  : "Failed: " + (j.message || r.status),
+                r.ok && j.permissions?.push ? "ok" : "er",
+              );
+            } catch (_) {
+              toast("Network error", "er");
+            }
+        }
+      });
+      document.addEventListener("input", (e) => {
+        const t = e.target;
+        if (t.id === "q") {
+          q = t.value;
+          if (!activeId && (view === "products" || view === "services"))
+            $("#pg").innerHTML = list(view);
+          return;
+        }
+        const i = cur();
+        if (!i) return;
+        if (t.dataset.f) {
+          const [k, s] = t.dataset.f.split(".");
+          s ? (i[k][s] = t.value) : (i[k] = t.value);
+          if (k === "shortDescription") {
+            const c = $("#cc");
+            c.textContent = t.value.length + " / " + MAXS;
+            c.className = "cc" + (t.value.length > MAXS ? " x" : "");
+          }
+          if (k === "name") {
+            $(".edtop h2").textContent = t.value || "Untitled";
+          }
+          touch();
+        } else if (t.dataset.l) {
+          const L = i[t.dataset.l],
+            n = +t.dataset.i;
+          t.dataset.k ? (L[n][t.dataset.k] = t.value) : (L[n] = t.value);
+          touch();
+        }
+      });
+      document.addEventListener("change", async (e) => {
+        const up = e.target.dataset.up,
+          i = cur();
+        if (!up || !i) return;
+        const fs = [...e.target.files];
+        if (!fs.length) return;
+        if (up === "main") {
+          i.images.main = await compress(fs[0]);
+          toast("Main photo added", "ok");
+        }
+        if (up === "gallery") {
+          const room = MAXG - i.images.gallery.length;
+          if (room <= 0) return toast("Gallery full", "er");
+          toast("Processing…");
+          for (const f of fs.slice(0, room))
+            i.images.gallery.push(await compress(f));
+        }
+        if (up === "brochure") {
+          const f = fs[0];
+          if (f.size > 8e6 && !confirm("PDF is over 8 MB. Continue?")) return;
+          i.brochure = await new Promise((r) => {
+            const x = new FileReader();
+            x.onload = () => r({ filename: f.name, dataUrl: x.result });
+            x.readAsDataURL(f);
+          });
+        }
+        touch();
+        render();
+      });
+      function compress(f) {
+        return new Promise((res) => {
+          const r = new FileReader();
+          r.onload = () => {
+            const im = new Image();
+            im.onload = () => {
+              const s = Math.min(1, 1400 / Math.max(im.width, im.height)),
+                c = document.createElement("canvas");
+              c.width = im.width * s;
+              c.height = im.height * s;
+              c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+              res({
+                filename: f.name.replace(/\.\w+$/, "") + ".jpg",
+                dataUrl: c.toDataURL("image/jpeg", 0.78),
+              });
+            };
+            im.src = r.result;
+          };
+          r.readAsDataURL(f);
+        });
+      }
+      document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+          e.preventDefault();
+          ghSave(true).then(() => {
+            if (!cloud()) toast("Saved locally ✓", "ok");
+          });
+        }
+      });
+      addEventListener("beforeunload", (e) => {
+        saveLocal();
+        if (dirty && cloud()) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          saveLocal();
+          if (dirty && cloud()) ghSave(false);
+        }
+      });
+      loadLocal();
+      render();
+    </script>
+  </body>
+</html>
