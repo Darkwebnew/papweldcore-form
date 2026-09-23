@@ -130,7 +130,7 @@
       .login-box {
         width: 100%;
         max-width: 400px;
-        margin: auto; /* centers both axes while allowing scroll if too tall */
+        margin: auto;
         background: #fff;
         border-radius: 22px;
         padding: 34px 30px 30px;
@@ -840,11 +840,38 @@
           background: rgba(0, 0, 0, 0.5);
           z-index: 45;
         }
+        /* ✅ FIX #2 — mobile top bar: keep the search visible */
         .top {
-          padding: 12px 14px;
+          padding: 10px 12px;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .top h1 {
+          font-size: 16px;
+          flex: 1;
+          order: 1;
+          min-width: 0;
+        }
+        .burger {
+          order: 0;
         }
         .top input {
-          display: none;
+          display: block;
+          max-width: none;
+          flex: 1 0 100%;
+          order: 4;
+          padding: 8px 12px;
+          font-size: 13px;
+        }
+        .pill {
+          order: 2;
+          padding: 7px 11px;
+          font-size: 11px;
+        }
+        #saveNow {
+          order: 3;
+          padding: 9px 13px;
+          font-size: 12px;
         }
         .pg {
           padding: 16px 14px 60px;
@@ -1418,8 +1445,14 @@
           const r = localStorage.getItem(DB) || localStorage.getItem(OLD);
           if (r) {
             const p = JSON.parse(r);
-            S.products = (p.products || []).map(hyd);
-            S.services = (p.services || []).map(hyd);
+            // ✅ FIX A — force the `type` field so old v9 records
+            // (which had no per-item type) don't produce "undefineds" views.
+            S.products = (p.products || []).map((x) =>
+              hyd({ ...x, type: "product" }),
+            );
+            S.services = (p.services || []).map((x) =>
+              hyd({ ...x, type: "service" }),
+            );
           }
         } catch (e) {}
       }
@@ -1437,6 +1470,8 @@
       }
       function pill(state, txt) {
         const p = $("#pill");
+        // ✅ FIX #1 — null guard, matches the reviews page.
+        if (!p) return;
         let c = "",
           t;
         if (saving) {
@@ -1504,7 +1539,9 @@
         if (!obj || !obj.dataUrl || obj.up === obj.dataUrl.length) return;
         const ex = await ghGet(path).catch(() => null);
         await ghPut(path, obj.dataUrl.split(",")[1], ex && ex.sha);
-        obj.url = RAW(path);
+        // ✅ FIX E — cache-buster so a replaced image isn't served from
+        // GitHub's CDN with the old bytes for ~5 minutes.
+        obj.url = RAW(path) + "?v=" + Date.now();
         obj.up = obj.dataUrl.length;
       }
       function clean(i, inline) {
@@ -1537,6 +1574,9 @@
           images: { main: f(i.images.main), gallery: i.images.gallery.map(f) },
           brochure: f(i.brochure),
           completion: pct(i),
+          // ✅ FIX D (part 1) — persist isSample so it survives the
+          // cloud round-trip and "Load samples" can't insert duplicates.
+          isSample: !!i.isSample,
           linkedFrom: null,
         };
       }
@@ -1556,10 +1596,11 @@
 
       async function ghSave(manual) {
         if (!cloud()) {
-          if (manual) {
-            toast("Add your GitHub token in Settings", "er");
-            setView("settings");
-          }
+          // ✅ FIX C — save locally and hint, but DO NOT yank the user
+          // out of the editor to Settings. They stay where they were.
+          saveLocal();
+          if (manual)
+            toast("Saved locally · add a GitHub token in Settings to sync", "ok");
           return;
         }
         if (saving) {
@@ -1588,7 +1629,7 @@
               const p = `brochures/${i.id}.pdf`;
               const ex = await ghGet(p).catch(() => null);
               await ghPut(p, i.brochure.dataUrl.split(",")[1], ex && ex.sha);
-              i.brochure.url = RAW(p);
+              i.brochure.url = RAW(p) + "?v=" + Date.now();
               i.brochure.up = i.brochure.dataUrl.length;
             }
           }
@@ -1650,6 +1691,8 @@
                 })),
               },
               brochure: r.brochure ? { ...r.brochure, dataUrl: null } : null,
+              // ✅ FIX D (part 2) — restore isSample on load.
+              isSample: !!r.isSample,
             });
           S.products = (raw.products || []).map((r) => rc(r, "product"));
           S.services = (raw.services || []).map((r) => rc(r, "service"));
@@ -1781,6 +1824,7 @@
           ms = src(i.images.main);
         const F = (k, l, ph, ex) =>
           `<div class="fg"><label>${l}</label><input data-f="${k}" value="${esc(i[k])}" placeholder="${ph}" ${ex || ""}></div>`;
+        // ✅ FIX #3 — removed dead data-up-zone attributes.
         return `<div class="card edtop"><button class="btn" data-act="back">← Back</button><h2>${esc(i.name || "Untitled")}</h2>
  <button class="btn" data-act="dup">⧉ Duplicate</button><button class="btn dn" data-act="del">🗑 Delete</button><button class="btn pri" data-act="save">💾 Save</button></div>
  <div class="card sec"><h3><span>1</span>Basic info</h3>${F(
@@ -1818,19 +1862,19 @@
  <div class="card sec"><h3><span>4</span>Key features</h3>${lines(i, "features", "Feature")}</div>
  <div class="card sec"><h3><span>5</span>Applications / industries</h3>${lines(i, "applications", "e.g. PEB")}</div>
  <div class="card sec"><h3><span>6</span>Photos</h3>
- <div class="fg"><label>Main photo</label><div class="up" data-up-zone="main">📷 Tap, drop or paste a main photo<input type="file" accept="image/*" data-up="main"></div>${
+ <div class="fg"><label>Main photo</label><div class="up">📷 Tap, drop or paste a main photo<input type="file" accept="image/*" data-up="main"></div>${
    ms
      ? `<div class="tg"><div class="tb"><img src="${esc(ms)}"><button data-act="rmMain">✕</button></div></div>`
      : ""
  }</div>
- <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up" data-up-zone="gallery">🖼️ Drop or tap to add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
+ <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up">🖼️ Drop or tap to add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
  <div class="tg">${i.images.gallery
    .map(
      (g, n) =>
        `<div class="tb"><img src="${esc(src(g))}"><button data-rg="${n}">✕</button></div>`,
    )
    .join("")}</div></div></div>
- <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up" data-up-zone="brochure">📄 ${
+ <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${
    i.brochure
      ? esc(i.brochure.filename || "brochure.pdf") + " attached — drop or tap to replace"
      : "Drop or tap to attach a PDF (optional)"
@@ -1970,14 +2014,20 @@
           render();
           toast("Deleted");
         } else if (a === "dup" && i) {
+          // ✅ FIX #4 — clear `up`/`url` on image copies so the duplicate
+          // re-uploads its own files instead of sharing the original's
+          // GitHub paths.
           const n = JSON.parse(JSON.stringify(i));
           n.id = uid();
           n.name += " (copy)";
           n.isSample = false;
+          const strip = (img) => (img ? { ...img, up: null, url: null } : img);
+          n.images.main = strip(n.images.main);
           n.images.gallery = n.images.gallery.map((g) => ({
-            ...g,
+            ...strip(g),
             gid: uid(),
           }));
+          if (n.brochure) n.brochure = strip(n.brochure);
           (i.type === "product" ? S.products : S.services).push(n);
           activeId = n.id;
           touch();
@@ -2015,6 +2065,8 @@
             ["product", S.products],
             ["service", S.services],
           ].forEach(([ty, L]) => {
+            // ✅ FIX D (part 3) — with isSample now persisted, this guard
+            // works correctly after a GitHub round-trip.
             if (!L.some((x) => x.isSample))
               L.unshift(mk(ty, { ...SAMPLES[ty], isSample: true }));
           });
@@ -2088,12 +2140,16 @@
         e.target.value = ""; // allow re-selecting the same file
       });
 
-      /* ---------- DRAG & DROP ---------- */
+      /* ---------- ✅ FIX B — drag & drop safety ----------
+         preventDefault is now ALWAYS called on dragover/drop, even when
+         the pointer is outside a .up zone. Previously, missing the zone
+         by 20px caused the browser to navigate to the dropped file and
+         lose unsaved work. */
       ["dragenter", "dragover"].forEach((ev) =>
         document.addEventListener(ev, (e) => {
+          e.preventDefault(); // always block the browser default
           const up = e.target.closest?.(".up");
           if (!up) return;
-          e.preventDefault();
           e.dataTransfer.dropEffect = "copy";
           up.classList.add("dr");
         }),
@@ -2108,9 +2164,9 @@
         }),
       );
       document.addEventListener("drop", async (e) => {
+        e.preventDefault(); // always block navigation-to-file
         const up = e.target.closest?.(".up");
-        if (!up) return;
-        e.preventDefault();
+        if (!up) return; // drop landed outside a zone — swallow it
         up.classList.remove("dr");
         const input = up.querySelector("input[type=file]");
         const kind = input?.dataset.up;
