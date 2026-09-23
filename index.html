@@ -8,6 +8,9 @@
     />
     <meta name="theme-color" content="#0b1533" />
     <title>PAP WELD CORE — Admin</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="apple-touch-icon" href="images/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap"
@@ -92,6 +95,121 @@
         min-height: 84px;
         resize: vertical;
       }
+
+      /* ---------- LOGIN SCREEN ---------- */
+      .login-ov {
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background:
+          radial-gradient(
+            1200px 600px at 20% -10%,
+            rgba(244, 81, 30, 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            1000px 600px at 100% 110%,
+            rgba(124, 58, 237, 0.22),
+            transparent 55%
+          ),
+          linear-gradient(180deg, var(--navy), #070d22);
+      }
+      .login-ov::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: var(--grad);
+      }
+      .login-box {
+        width: 100%;
+        max-width: 400px;
+        background: #fff;
+        border-radius: 22px;
+        padding: 34px 30px 30px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        position: relative;
+      }
+      .login-logo {
+        background: var(--navy);
+        border-radius: 16px;
+        padding: 16px 18px;
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-logo::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: var(--grad);
+      }
+      .login-logo img {
+        max-width: 100%;
+        max-height: 58px;
+        object-fit: contain;
+      }
+      .login-logo .fb {
+        display: none;
+        font: 800 16px Montserrat;
+        color: #fff;
+        letter-spacing: 0.4px;
+      }
+      .login-logo .fb span {
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .login-box h2 {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        margin-bottom: 4px;
+      }
+      .login-box .sub {
+        color: var(--mu);
+        font-size: 13px;
+        margin-bottom: 22px;
+      }
+      .login-box .fg label {
+        display: block;
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 6px;
+        color: #334066;
+      }
+      .login-err {
+        color: var(--er);
+        font-size: 12.5px;
+        font-weight: 600;
+        min-height: 18px;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .login-box .hint {
+        text-align: center;
+        color: var(--mu);
+        font-size: 11.5px;
+        margin-top: 14px;
+      }
+      .login-foot {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 18px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 11.5px;
+        letter-spacing: 0.4px;
+      }
+
+      /* ---------- APP SHELL ---------- */
       .side {
         position: fixed;
         inset: 0 auto 0 0;
@@ -128,6 +246,7 @@
         font: 800 15px Montserrat;
         background: var(--grad);
         -webkit-background-clip: text;
+        background-clip: text;
         color: transparent;
         text-align: center;
       }
@@ -195,6 +314,25 @@
         background: var(--grad);
         border-radius: 9px;
         transition: width 0.4s;
+      }
+      .logout-btn {
+        width: 100%;
+        margin-top: 14px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 600;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        transition: 0.15s;
+      }
+      .logout-btn:hover {
+        background: rgba(239, 68, 68, 0.18);
+        color: #fff;
       }
       .main {
         margin-left: 268px;
@@ -608,7 +746,7 @@
         opacity: 0;
         pointer-events: none;
         transition: 0.3s;
-        z-index: 200;
+        z-index: 600;
         box-shadow: var(--sh);
       }
       .toast.show {
@@ -663,52 +801,209 @@
     </style>
   </head>
   <body>
-    <aside class="side" id="side">
-      <div class="logo">
-        <img
-          src="images/logo.PNG"
-          alt="PAP Weld Core"
-          onerror="
-            this.style.display = 'none';
-            this.nextElementSibling.style.display = 'block';
-          "
-        />
-        <div class="fb">PAP WELD CORE</div>
-      </div>
-      <nav class="nav">
-        <small>MENU</small>
-        <button class="nv on" data-v="dash">📊 Dashboard</button>
-        <button class="nv" data-v="products">
-          📦 Products <b id="cp">0</b>
-        </button>
-        <button class="nv" data-v="services">
-          ⚙️ Services <b id="cs">0</b>
-        </button>
-        <small>SYSTEM</small>
-        <button class="nv" data-v="settings">🔐 GitHub &amp; Brand</button>
-      </nav>
-      <div class="sf">
-        <div class="row" style="justify-content: space-between">
-          <span>Data completion</span><b id="gp">0%</b>
+    <!-- ============ LOGIN SCREEN ============ -->
+    <div class="login-ov" id="loginOv">
+      <form class="login-box" id="loginForm" autocomplete="on">
+        <div class="login-logo">
+          <img
+            src="images/logo.PNG"
+            alt="PAP Weld Core"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.style.display = 'block';
+            "
+          />
+          <div class="fb">PAP <span>WELD CORE</span></div>
         </div>
-        <div class="bar"><i id="gb" style="width: 0"></i></div>
-      </div>
-    </aside>
-    <div class="ov" id="ov"></div>
-    <div class="main">
-      <div class="top">
-        <button class="burger" id="bg">☰</button>
-        <h1 id="ttl">Dashboard</h1>
-        <input id="q" placeholder="🔍 Search…" />
-        <div class="pill" id="pill"><i></i><span id="pt">Local</span></div>
-        <button class="btn pri" id="saveNow">💾 Save</button>
-      </div>
-      <div class="pg" id="pg"></div>
+        <h2>Admin sign in</h2>
+        <p class="sub">Restricted area — authorised users only.</p>
+        <div class="fg">
+          <label for="lu">Username</label>
+          <input
+            id="lu"
+            name="username"
+            autocomplete="username"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            required
+          />
+        </div>
+        <div class="fg">
+          <label for="lp">Password</label>
+          <input
+            id="lp"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <button class="btn pri" type="submit" style="width: 100%">
+          🔓 Sign in
+        </button>
+        <p class="login-err" id="lerr"></p>
+        <p class="hint">
+          Session ends when you close the browser tab.
+        </p>
+      </form>
+      <div class="login-foot">PAP WELD CORE · Admin</div>
     </div>
+
+    <!-- ============ APP (hidden until signed in) ============ -->
+    <div id="app" style="display: none">
+      <aside class="side" id="side">
+        <div class="logo">
+          <img
+            src="images/logo.PNG"
+            alt="PAP Weld Core"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.style.display = 'block';
+            "
+          />
+          <div class="fb">PAP WELD CORE</div>
+        </div>
+        <nav class="nav">
+          <small>MENU</small>
+          <button class="nv on" data-v="dash">📊 Dashboard</button>
+          <button class="nv" data-v="products">
+            📦 Products <b id="cp">0</b>
+          </button>
+          <button class="nv" data-v="services">
+            ⚙️ Services <b id="cs">0</b>
+          </button>
+          <small>SYSTEM</small>
+          <button class="nv" data-v="settings">🔐 GitHub &amp; Brand</button>
+        </nav>
+        <div class="sf">
+          <div class="row" style="justify-content: space-between">
+            <span>Data completion</span><b id="gp">0%</b>
+          </div>
+          <div class="bar"><i id="gb" style="width: 0"></i></div>
+          <button class="logout-btn" id="logoutBtn" type="button">
+            🚪 Sign out
+          </button>
+        </div>
+      </aside>
+      <div class="ov" id="ov"></div>
+      <div class="main">
+        <div class="top">
+          <button class="burger" id="bg">☰</button>
+          <h1 id="ttl">Dashboard</h1>
+          <input id="q" placeholder="🔍 Search…" />
+          <div class="pill" id="pill"><i></i><span id="pt">Local</span></div>
+          <button class="btn pri" id="saveNow">💾 Save</button>
+        </div>
+        <div class="pg" id="pg"></div>
+      </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
-      /* ---------- CONFIG (token is kept in this browser only — set it in Settings) ---------- */
+      /* ============================================================
+         SECURITY NOTES
+         ------------------------------------------------------------
+         1. The GitHub token below is EMPTY on purpose. Never hardcode
+            a token into this file — anyone who views the page source
+            would get write access to your repository. Add it through
+            "GitHub & Brand" in the sidebar; it is stored in this
+            browser's localStorage only.
+
+         2. The login gate below is CLIENT-SIDE ONLY. It stops a
+            casual visitor, but anyone who has this HTML file can read
+            the credentials in the source. Do NOT host this page
+            publicly. For real security, put this file behind a server
+            (Cloudflare Access, Netlify Identity, an Express/Node
+            login, etc.).
+
+         3. If you change the username/password, edit AUTH below.
+            The values are lightly obfuscated (base64) so they're not
+            staring at you in plain text — but base64 is NOT
+            encryption. It only keeps honest people honest.
+         ============================================================ */
+
+      /* ---------- AUTH ---------- */
+      const AUTH = {
+        // base64 of "papweldcore" and "papweldcore@2026"
+        u: "cGFwd2VsZGNvcmU=",
+        p: "cGFwd2VsZGNvcmVAMjAyNg==",
+        key: "papweld_auth",
+      };
+      const b64d = (s) => {
+        try {
+          const bin = atob(s);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          return new TextDecoder().decode(bytes);
+        } catch (e) {
+          return "";
+        }
+      };
+
+      function isAuthed() {
+        try {
+          return sessionStorage.getItem(AUTH.key) === "1";
+        } catch (e) {
+          return false;
+        }
+      }
+      function showApp() {
+        document.getElementById("loginOv").style.display = "none";
+        document.getElementById("app").style.display = "";
+      }
+      function showLogin() {
+        document.getElementById("loginOv").style.display = "";
+        document.getElementById("app").style.display = "none";
+      }
+      function doLogin(user, pass) {
+        return b64d(AUTH.u) === user && b64d(AUTH.p) === pass;
+      }
+
+      /* Login form */
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const u = document.getElementById("lu").value.trim();
+        const p = document.getElementById("lp").value;
+        const err = document.getElementById("lerr");
+        if (doLogin(u, p)) {
+          try {
+            sessionStorage.setItem(AUTH.key, "1");
+          } catch (e) {}
+          err.textContent = "";
+          showApp();
+          // If nothing local and cloud is configured, auto-pull from GitHub
+          if (!all().length && cloud()) ghLoad();
+        } else {
+          err.textContent = "Incorrect username or password.";
+          document.getElementById("lp").value = "";
+          document.getElementById("lp").focus();
+        }
+      });
+
+      /* Sign out */
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        if (!confirm("Sign out of the admin panel?")) return;
+        try {
+          sessionStorage.removeItem(AUTH.key);
+        } catch (e) {}
+        location.reload();
+      });
+
+      /* Boot: show login or app */
+      (function boot() {
+        if (isAuthed()) showApp();
+        else {
+          showLogin();
+          setTimeout(() => document.getElementById("lu")?.focus(), 60);
+        }
+      })();
+
+      /* ============================================================
+         APP
+         ============================================================ */
       const CK = "papweld_gh",
         DB = "papweld_ps_v10",
         OLD = "papweld_ps_v9";
@@ -716,7 +1011,7 @@
         owner: "darkwebnew",
         repo: "papweldcore-form",
         branch: "main",
-        token: "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",
+        token: "", // <-- leave empty; set it in Settings
         dataPath: "data.json",
       };
       try {
@@ -725,7 +1020,7 @@
       const LOCAL_DELAY = 800,
         CLOUD_DELAY = 5000,
         MAXG = 10,
-        MAXS = 130;
+        MAXS = 180;
       const PCATS = [
         "H-Beam Welding",
         "Robotic Welding System",
@@ -858,6 +1153,22 @@
         `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${p}`;
       const src = (i) => (i ? i.dataUrl || i.url || "" : "");
       const cloud = () => !!(cfg.owner && cfg.repo && cfg.token);
+
+      /* ---------- UTF-8 safe base64 ---------- */
+      function b64encode(str) {
+        const bytes = new TextEncoder().encode(str);
+        let bin = "";
+        for (let k = 0; k < bytes.length; k++)
+          bin += String.fromCharCode(bytes[k]);
+        return btoa(bin);
+      }
+      function b64decode(b64) {
+        const bin = atob(String(b64).replace(/\n/g, ""));
+        const bytes = new Uint8Array(bin.length);
+        for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+        return new TextDecoder().decode(bytes);
+      }
+
       let toastT;
       function toast(m, t) {
         const e = $("#toast");
@@ -901,7 +1212,10 @@
         if (!Array.isArray(i.applications) || !i.applications.length)
           i.applications = [""];
         i.images = i.images || { main: null, gallery: [] };
-        i.images.gallery = i.images.gallery || [];
+        i.images.gallery = (i.images.gallery || []).map((g) => ({
+          ...g,
+          gid: g.gid || uid(),
+        }));
         i.brochure = i.brochure || null;
         return i;
       }
@@ -1049,6 +1363,7 @@
           o && {
             filename: o.filename || "",
             url: o.url || null,
+            ...(o.gid ? { gid: o.gid } : {}),
             ...(inline && o.dataUrl ? { dataUrl: o.dataUrl } : {}),
           };
         return {
@@ -1099,6 +1414,7 @@
           return;
         }
         if (saving) {
+          if (manual) toast("Already saving…");
           return;
         }
         const bad = all().find((i) => !i.name.trim());
@@ -1113,11 +1429,8 @@
         try {
           for (const i of all()) {
             await upload(i.images.main, `images/${i.id}-main.jpg`);
-            for (let k = 0; k < i.images.gallery.length; k++)
-              await upload(
-                i.images.gallery[k],
-                `images/${i.id}-gallery-${k + 1}.jpg`,
-              );
+            for (const g of i.images.gallery)
+              await upload(g, `images/${i.id}-gallery-${g.gid}.jpg`);
             if (
               i.brochure &&
               i.brochure.dataUrl &&
@@ -1130,11 +1443,7 @@
               i.brochure.up = i.brochure.dataUrl.length;
             }
           }
-          const b64 = btoa(
-            unescape(
-              encodeURIComponent(JSON.stringify(payload(false), null, 2)),
-            ),
-          );
+          const b64 = b64encode(JSON.stringify(payload(false), null, 2));
           const ex = await ghGet(cfg.dataPath).catch(() => null);
           await ghPut(cfg.dataPath, b64, ex && ex.sha);
           saveLocal();
@@ -1149,19 +1458,22 @@
           dirty = true;
           pill("err", "Save failed");
           toast(e.message.slice(0, 70), "er");
-          if (view === "products" || view === "services") 0;
         }
       }
       async function ghLoad() {
-        if (!cloud()) return toast("Add your GitHub token first", "er");
+        if (!cloud()) {
+          toast("Add your GitHub token first", "er");
+          return;
+        }
         if (dirty && !confirm("Unsaved changes will be replaced. Continue?"))
           return;
         try {
           const f = await ghGet(cfg.dataPath);
-          if (!f) return toast("No data.json in repo yet", "er");
-          const raw = JSON.parse(
-            decodeURIComponent(escape(atob(f.content.replace(/\n/g, "")))),
-          );
+          if (!f) {
+            toast("No data.json in repo yet", "er");
+            return;
+          }
+          const raw = JSON.parse(b64decode(f.content));
           const rc = (r, t) =>
             hyd({
               id: r.id,
@@ -1248,7 +1560,13 @@
       function card(i) {
         const s = src(i.images.main),
           p = pct(i);
-        return `<div class="card it" data-open="${i.id}"><div class="th">${s ? `<img src="${s}" loading="lazy">` : i.type === "service" ? "⚙️" : "📦"}${i.badge ? `<span class="bd">${esc(i.badge)}</span>` : ""}</div>
+        return `<div class="card it" data-open="${i.id}"><div class="th">${
+          s
+            ? `<img src="${esc(s)}" loading="lazy">`
+            : i.type === "service"
+              ? "⚙️"
+              : "📦"
+        }${i.badge ? `<span class="bd">${esc(i.badge)}</span>` : ""}</div>
  <div class="ib"><h3>${esc(i.name || "Untitled " + i.type)}</h3><p>${esc(i.category || "No category")}${i.priceDisplay ? " · " + esc(i.priceDisplay) : ""}</p><div class="pb"><i style="width:${p}%"></i></div><div class="pm"><span>Completion</span><span>${p}%</span></div></div></div>`;
       }
       function dash(a, g) {
@@ -1258,11 +1576,21 @@
  <div class="card stat" style="--c:var(--b)"><small>Services</small><h2>${S.services.length}</h2></div>
  <div class="card stat" style="--c:var(--t)"><small>Avg. completion</small><h2>${g}%</h2></div>
  <div class="card stat" style="--c:var(--p)"><small>Needs attention</small><h2>${low.length}</h2></div></div>
- ${cloud() ? "" : '<div class="alert">⚠️ GitHub is not connected — changes are saved in this browser only. Open <b>GitHub &amp; Brand</b> to add your token.</div>'}
+ ${
+   cloud()
+     ? ""
+     : '<div class="alert">⚠️ GitHub is not connected — changes are saved in this browser only. Open <b>GitHub &amp; Brand</b> to add your token.</div>'
+ }
  <div class="row" style="margin-bottom:18px"><button class="btn pri" data-new="product">＋ New Product</button><button class="btn dk" data-new="service">＋ New Service</button>
  <button class="btn" data-act="load">⬇ Load from GitHub</button><button class="btn" data-act="dl">⬇ Download JSON</button><button class="btn" data-act="copy">📋 Copy JSON</button>
  <button class="btn" data-act="samples">📌 Load samples</button></div>
- ${low.length ? `<h3 class="mont" style="margin-bottom:12px">Finish these next</h3><div class="grid">${low.slice(0, 6).map(card).join("")}</div>` : a.length ? "" : '<div class="empty"><div>🚀</div><h3>Nothing here yet</h3><p>Add your first product or load the samples.</p></div>'}`;
+ ${
+   low.length
+     ? `<h3 class="mont" style="margin-bottom:12px">Finish these next</h3><div class="grid">${low.slice(0, 6).map(card).join("")}</div>`
+     : a.length
+       ? ""
+       : '<div class="empty"><div>🚀</div><h3>Nothing here yet</h3><p>Add your first product or load the samples.</p></div>'
+ }`;
       }
       function list(v) {
         const t = v === "products" ? "product" : "service",
@@ -1270,14 +1598,22 @@
             (i) => !q || i.name.toLowerCase().includes(q.toLowerCase()),
           );
         return `<div class="row" style="justify-content:space-between;margin-bottom:18px"><p style="color:var(--mu)">${t === "product" ? "Machines and equipment you manufacture" : "Installation, maintenance, training & custom work"}</p><button class="btn pri" data-new="${t}">＋ Add ${t === "product" ? "Product" : "Service"}</button></div>
- ${L.length ? `<div class="grid">${L.map(card).join("")}</div>` : `<div class="empty"><div>${t === "product" ? "📦" : "⚙️"}</div><h3>No ${v} found</h3></div>`}`;
+ ${
+   L.length
+     ? `<div class="grid">${L.map(card).join("")}</div>`
+     : `<div class="empty"><div>${t === "product" ? "📦" : "⚙️"}</div><h3>No ${v} found</h3></div>`
+ }`;
       }
       function lines(i, key, ph, two) {
         return (
           i[key]
             .map(
               (x, n) =>
-                `<div class="ln">${two ? `<input data-l="${key}" data-k="label" data-i="${n}" value="${esc(x.label)}" placeholder="Label"><input data-l="${key}" data-k="value" data-i="${n}" value="${esc(x.value)}" placeholder="Value">` : `<input data-l="${key}" data-i="${n}" value="${esc(x)}" placeholder="${ph}">`}<button data-del="${key}" data-i="${n}">✕</button></div>`,
+                `<div class="ln">${
+                  two
+                    ? `<input data-l="${key}" data-k="label" data-i="${n}" value="${esc(x.label)}" placeholder="Label"><input data-l="${key}" data-k="value" data-i="${n}" value="${esc(x.value)}" placeholder="Value">`
+                    : `<input data-l="${key}" data-i="${n}" value="${esc(x)}" placeholder="${ph}">`
+                }<button data-del="${key}" data-i="${n}">✕</button></div>`,
             )
             .join("") + `<button class="add" data-add="${key}">＋ Add</button>`
         );
@@ -1290,11 +1626,26 @@
           `<div class="fg"><label>${l}</label><input data-f="${k}" value="${esc(i[k])}" placeholder="${ph}" ${ex || ""}></div>`;
         return `<div class="card edtop"><button class="btn" data-act="back">← Back</button><h2>${esc(i.name || "Untitled")}</h2>
  <button class="btn" data-act="dup">⧉ Duplicate</button><button class="btn dn" data-act="del">🗑 Delete</button><button class="btn pri" data-act="save">💾 Save</button></div>
- <div class="card sec"><h3><span>1</span>Basic info</h3>${F("name", (sv ? "Service" : "Product") + " name *", "e.g. PTW - Pull Thru Welding Machine")}
- <div class="g2"><div class="fg"><label>Category</label><select data-f="category"><option value="">— Select —</option>${cats.map((c) => `<option ${i.category === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
- <div class="fg"><label>Badge</label><select data-f="badge">${BADGES.map((b) => `<option value="${b}" ${i.badge === b ? "selected" : ""}>${b || "— None —"}</option>`).join("")}</select></div></div>
- ${F("priceDisplay", (sv ? "Rate" : "Price") + " (blank = hidden)", "e.g. ₹85,000 / year")}
- <div class="fg"><label>Short description (max ${MAXS})</label><input data-f="shortDescription" maxlength="180" value="${esc(i.shortDescription)}"><div class="cc ${i.shortDescription.length > MAXS ? "x" : ""}" id="cc">${i.shortDescription.length} / ${MAXS}</div></div></div>
+ <div class="card sec"><h3><span>1</span>Basic info</h3>${F(
+   "name",
+   (sv ? "Service" : "Product") + " name *",
+   "e.g. PTW - Pull Thru Welding Machine",
+ )}
+ <div class="g2"><div class="fg"><label>Category</label><select data-f="category"><option value="">— Select —</option>${cats
+   .map((c) => `<option ${i.category === c ? "selected" : ""}>${c}</option>`)
+   .join("")}</select></div>
+ <div class="fg"><label>Badge</label><select data-f="badge">${BADGES.map(
+   (b) =>
+     `<option value="${b}" ${i.badge === b ? "selected" : ""}>${b || "— None —"}</option>`,
+ ).join("")}</select></div></div>
+ ${F(
+   "priceDisplay",
+   (sv ? "Rate" : "Price") + " (blank = hidden)",
+   "e.g. ₹85,000 / year",
+ )}
+ <div class="fg"><label>Short description (max ${MAXS})</label><input data-f="shortDescription" maxlength="${MAXS}" value="${esc(i.shortDescription)}"><div class="cc ${
+   i.shortDescription.length > MAXS ? "x" : ""
+ }" id="cc">${i.shortDescription.length} / ${MAXS}</div></div></div>
  <div class="card sec"><h3><span>2</span>Full description</h3>
  ${[
    ["p1", sv ? "What is this service?" : "What is this machine?"],
@@ -1310,10 +1661,27 @@
  <div class="card sec"><h3><span>4</span>Key features</h3>${lines(i, "features", "Feature")}</div>
  <div class="card sec"><h3><span>5</span>Applications / industries</h3>${lines(i, "applications", "e.g. PEB")}</div>
  <div class="card sec"><h3><span>6</span>Photos</h3>
- <div class="fg"><label>Main photo</label><div class="up">📷 Tap or drop main photo<input type="file" accept="image/*" data-up="main"></div>${ms ? `<div class="tg"><div class="tb"><img src="${ms}"><button data-act="rmMain">✕</button></div></div>` : ""}</div>
+ <div class="fg"><label>Main photo</label><div class="up">📷 Tap or drop main photo<input type="file" accept="image/*" data-up="main"></div>${
+   ms
+     ? `<div class="tg"><div class="tb"><img src="${esc(ms)}"><button data-act="rmMain">✕</button></div></div>`
+     : ""
+ }</div>
  <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up">🖼️ Add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
- <div class="tg">${i.images.gallery.map((g, n) => `<div class="tb"><img src="${src(g)}"><button data-rg="${n}">✕</button></div>`).join("")}</div></div></div>
- <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${i.brochure ? esc(i.brochure.filename || "brochure.pdf") + " attached — tap to replace" : "Tap to attach PDF (optional)"}<input type="file" accept="application/pdf" data-up="brochure"></div>${i.brochure ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro">Remove</button>' : ""}</div>`;
+ <div class="tg">${i.images.gallery
+   .map(
+     (g, n) =>
+       `<div class="tb"><img src="${esc(src(g))}"><button data-rg="${n}">✕</button></div>`,
+   )
+   .join("")}</div></div></div>
+ <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${
+   i.brochure
+     ? esc(i.brochure.filename || "brochure.pdf") + " attached — tap to replace"
+     : "Tap to attach PDF (optional)"
+ }<input type="file" accept="application/pdf" data-up="brochure"></div>${
+   i.brochure
+     ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro">Remove</button>'
+     : ""
+ }</div>`;
       }
       function settings() {
         return `<div class="card sec"><h3><span>🔐</span>GitHub connection</h3>
@@ -1322,7 +1690,9 @@
  <div class="fg"><label>Branch</label><input id="c_branch" value="${esc(cfg.branch)}"></div><div class="fg"><label>Data file</label><input id="c_dataPath" value="${esc(cfg.dataPath)}"></div></div>
  <div class="fg"><label>Personal access token</label><input id="c_token" type="password" value="${esc(cfg.token)}" placeholder="github_pat_…"></div>
  <div class="row"><button class="btn pri" data-act="cfg">Save settings</button><button class="btn" data-act="test">Test connection</button></div></div>
- <div class="card sec"><h3><span>🎨</span>Brand palette (from your logo)</h3><div class="pal">${PAL.map(([n, c]) => `<span style="background:${c}">${n}<br>${c}</span>`).join("")}</div>
+ <div class="card sec"><h3><span>🎨</span>Brand palette (from your logo)</h3><div class="pal">${PAL.map(
+   ([n, c]) => `<span style="background:${c}">${n}<br>${c}</span>`,
+ ).join("")}</div>
  <p style="color:var(--mu);margin-top:12px;font-size:12.5px">Logo file: <code>images/logo.PNG</code> (shown on a white tile so the navy text stays readable).</p></div>`;
       }
 
@@ -1398,11 +1768,9 @@
         if (a === "back") {
           activeId = null;
           render();
-        } else if (a === "save")
-          ghSave(true).then(() => {
-            if (!cloud()) toast("Saved locally ✓", "ok");
-          });
-        else if (
+        } else if (a === "save") {
+          ghSave(true);
+        } else if (
           a === "del" &&
           i &&
           confirm(
@@ -1420,6 +1788,10 @@
           n.id = uid();
           n.name += " (copy)";
           n.isSample = false;
+          n.images.gallery = n.images.gallery.map((g) => ({
+            ...g,
+            gid: uid(),
+          }));
           (i.type === "product" ? S.products : S.services).push(n);
           activeId = n.id;
           touch();
@@ -1531,7 +1903,10 @@
         }
         if (up === "gallery") {
           const room = MAXG - i.images.gallery.length;
-          if (room <= 0) return toast("Gallery full", "er");
+          if (room <= 0) {
+            toast("Gallery full", "er");
+            return;
+          }
           toast("Processing…");
           for (const f of fs.slice(0, room))
             i.images.gallery.push(await compress(f));
@@ -1560,6 +1935,7 @@
               c.height = im.height * s;
               c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
               res({
+                gid: uid(),
                 filename: f.name.replace(/\.\w+$/, "") + ".jpg",
                 dataUrl: c.toDataURL("image/jpeg", 0.78),
               });
@@ -1572,9 +1948,7 @@
       document.addEventListener("keydown", (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "s") {
           e.preventDefault();
-          ghSave(true).then(() => {
-            if (!cloud()) toast("Saved locally ✓", "ok");
-          });
+          ghSave(true);
         }
       });
       addEventListener("beforeunload", (e) => {
@@ -1590,8 +1964,11 @@
           if (dirty && cloud()) ghSave(false);
         }
       });
+
+      /* ---------- BOOT ---------- */
       loadLocal();
       render();
+      // Auto-pull only after auth (the login handler triggers ghLoad if needed).
     </script>
   </body>
 </html>
