@@ -7,6 +7,8 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <meta name="theme-color" content="#0b1533" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>PAP WELD CORE — Admin</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
@@ -101,8 +103,9 @@
         position: fixed;
         inset: 0;
         z-index: 500;
-        display: grid;
-        place-items: center;
+        display: flex;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         padding: 20px;
         background:
           radial-gradient(
@@ -127,6 +130,7 @@
       .login-box {
         width: 100%;
         max-width: 400px;
+        margin: auto; /* centers both axes while allowing scroll if too tall */
         background: #fff;
         border-radius: 22px;
         padding: 34px 30px 30px;
@@ -184,6 +188,41 @@
         margin-bottom: 6px;
         color: #334066;
       }
+      .pw-wrap {
+        position: relative;
+      }
+      .pw-wrap input {
+        padding-right: 46px;
+      }
+      .pw-toggle {
+        position: absolute;
+        top: 50%;
+        right: 6px;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--mu);
+        font-size: 16px;
+        transition: 0.15s;
+      }
+      .pw-toggle:hover {
+        background: #f2f4fa;
+        color: var(--tx);
+      }
+      .caps-warn {
+        display: none;
+        margin-top: 6px;
+        font-size: 11.5px;
+        color: #b45309;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        padding: 5px 9px;
+        border-radius: 7px;
+        font-weight: 600;
+      }
       .login-err {
         color: var(--er);
         font-size: 12.5px;
@@ -207,6 +246,7 @@
         color: rgba(255, 255, 255, 0.35);
         font-size: 11.5px;
         letter-spacing: 0.4px;
+        pointer-events: none;
       }
 
       /* ---------- APP SHELL ---------- */
@@ -444,6 +484,7 @@
       }
       .btn:disabled {
         opacity: 0.5;
+        cursor: not-allowed;
       }
       .row {
         display: flex;
@@ -645,6 +686,9 @@
         border-color: var(--p);
         background: #f6f2ff;
       }
+      .up.dr {
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+      }
       .up input {
         position: absolute;
         inset: 0;
@@ -748,6 +792,8 @@
         transition: 0.3s;
         z-index: 600;
         box-shadow: var(--sh);
+        max-width: 90vw;
+        text-align: center;
       }
       .toast.show {
         opacity: 1;
@@ -761,6 +807,18 @@
       }
       .ov {
         display: none;
+      }
+      .noscript-msg {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: grid;
+        place-items: center;
+        background: var(--navy);
+        color: #fff;
+        padding: 30px;
+        text-align: center;
+        font: 600 15px Inter, sans-serif;
       }
       @media (max-width: 860px) {
         .side {
@@ -797,13 +855,30 @@
         .edtop {
           top: 60px;
         }
+        /* Prevent iOS Safari from auto-zooming on input focus */
+        input,
+        select,
+        textarea {
+          font-size: 16px !important;
+        }
       }
     </style>
   </head>
   <body>
+    <noscript>
+      <div class="noscript-msg">
+        ⚠️ This admin panel requires JavaScript. Please enable it and reload.
+      </div>
+    </noscript>
+
     <!-- ============ LOGIN SCREEN ============ -->
     <div class="login-ov" id="loginOv">
-      <form class="login-box" id="loginForm" autocomplete="on">
+      <form
+        class="login-box"
+        id="loginForm"
+        autocomplete="on"
+        onsubmit="return false"
+      >
         <div class="login-logo">
           <img
             src="images/logo.PNG"
@@ -831,21 +906,31 @@
         </div>
         <div class="fg">
           <label for="lp">Password</label>
-          <input
-            id="lp"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            required
-          />
+          <div class="pw-wrap">
+            <input
+              id="lp"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              class="pw-toggle"
+              type="button"
+              id="pwToggle"
+              aria-label="Show password"
+              title="Show / hide password"
+            >
+              👁
+            </button>
+          </div>
+          <div class="caps-warn" id="capsWarn">⚠️ Caps Lock is on</div>
         </div>
-        <button class="btn pri" type="submit" style="width: 100%">
+        <button class="btn pri" type="submit" id="loginBtn" style="width: 100%">
           🔓 Sign in
         </button>
         <p class="login-err" id="lerr"></p>
-        <p class="hint">
-          Session ends when you close the browser tab.
-        </p>
+        <p class="hint">Session ends when you close the browser tab.</p>
       </form>
       <div class="login-foot">PAP WELD CORE · Admin</div>
     </div>
@@ -913,15 +998,16 @@
 
          2. The login gate below is CLIENT-SIDE ONLY. It stops a
             casual visitor, but anyone who has this HTML file can read
-            the credentials in the source. Do NOT host this page
-            publicly. For real security, put this file behind a server
-            (Cloudflare Access, Netlify Identity, an Express/Node
-            login, etc.).
+            the credentials in the source or bypass the gate via
+            devtools. Do NOT host this page publicly. For real
+            security, put this file behind a server (Cloudflare
+            Access, Netlify Identity, an Express/Node login, etc.).
 
-         3. If you change the username/password, edit AUTH below.
-            The values are lightly obfuscated (base64) so they're not
-            staring at you in plain text — but base64 is NOT
-            encryption. It only keeps honest people honest.
+         3. To change the username/password, edit AUTH below.
+            Values are base64-encoded (NOT encrypted — just
+            obfuscated). Generate a new base64 string in your
+            browser console with:
+                btoa("yournewvalue")
          ============================================================ */
 
       /* ---------- AUTH ---------- */
@@ -930,6 +1016,7 @@
         u: "cGFwd2VsZGNvcmU=",
         p: "cGFwd2VsZGNvcmVAMjAyNg==",
         key: "papweld_auth",
+        idleMs: 30 * 60 * 1000, // auto sign-out after 30 min idle
       };
       const b64d = (s) => {
         try {
@@ -961,20 +1048,53 @@
         return b64d(AUTH.u) === user && b64d(AUTH.p) === pass;
       }
 
-      /* Login form */
+      /* ---------- LOGIN FORM ---------- */
       const loginForm = document.getElementById("loginForm");
+      const loginBtn = document.getElementById("loginBtn");
+      const pwToggle = document.getElementById("pwToggle");
+      const capsWarn = document.getElementById("capsWarn");
+      let submitting = false;
+
+      pwToggle.addEventListener("click", () => {
+        const pw = document.getElementById("lp");
+        const show = pw.type === "password";
+        pw.type = show ? "text" : "password";
+        pwToggle.textContent = show ? "🙈" : "👁";
+        pwToggle.setAttribute(
+          "aria-label",
+          show ? "Hide password" : "Show password",
+        );
+        pw.focus();
+      });
+
+      document
+        .getElementById("lp")
+        .addEventListener("keyup", (e) => {
+          try {
+            const on = e.getModifierState && e.getModifierState("CapsLock");
+            capsWarn.style.display = on ? "block" : "none";
+          } catch (_) {}
+        });
+      document
+        .getElementById("lp")
+        .addEventListener("blur", () => (capsWarn.style.display = "none"));
+
       loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
+        if (submitting) return;
         const u = document.getElementById("lu").value.trim();
         const p = document.getElementById("lp").value;
         const err = document.getElementById("lerr");
         if (doLogin(u, p)) {
+          submitting = true;
+          loginBtn.disabled = true;
           try {
             sessionStorage.setItem(AUTH.key, "1");
           } catch (e) {}
           err.textContent = "";
           showApp();
-          // If nothing local and cloud is configured, auto-pull from GitHub
+          render();
+          resetIdle();
           if (!all().length && cloud()) ghLoad();
         } else {
           err.textContent = "Incorrect username or password.";
@@ -983,19 +1103,48 @@
         }
       });
 
-      /* Sign out */
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        if (!confirm("Sign out of the admin panel?")) return;
-        try {
-          sessionStorage.removeItem(AUTH.key);
-        } catch (e) {}
-        location.reload();
-      });
+      /* ---------- SIGN OUT ---------- */
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", async () => {
+          if (!confirm("Sign out of the admin panel?")) return;
+          if (dirty && cloud() && !saving) {
+            toast("Saving before sign out…");
+            try {
+              await ghSave(false);
+            } catch (_) {}
+          } else {
+            saveLocal();
+          }
+          try {
+            sessionStorage.removeItem(AUTH.key);
+          } catch (e) {}
+          location.reload();
+        });
 
-      /* Boot: show login or app */
-      (function boot() {
-        if (isAuthed()) showApp();
-        else {
+      /* ---------- IDLE AUTO-LOGOUT ---------- */
+      let idleT;
+      function resetIdle() {
+        clearTimeout(idleT);
+        if (!isAuthed()) return;
+        idleT = setTimeout(() => {
+          try {
+            sessionStorage.removeItem(AUTH.key);
+          } catch (e) {}
+          alert("Session expired due to inactivity. Please sign in again.");
+          location.reload();
+        }, AUTH.idleMs);
+      }
+      ["click", "keydown", "mousemove", "touchstart", "scroll"].forEach((ev) =>
+        document.addEventListener(ev, resetIdle, { passive: true }),
+      );
+
+      /* ---------- BOOT AUTH ---------- */
+      (function bootAuth() {
+        if (isAuthed()) {
+          showApp();
+          resetIdle();
+        } else {
           showLogin();
           setTimeout(() => document.getElementById("lu")?.focus(), 60);
         }
@@ -1533,6 +1682,7 @@
         scrollTo(0, 0);
       }
       function render() {
+        if (!isAuthed()) return; // safety: never render app content pre-login
         $("#cp").textContent = S.products.length;
         $("#cs").textContent = S.services.length;
         document
@@ -1593,10 +1743,17 @@
  }`;
       }
       function list(v) {
-        const t = v === "products" ? "product" : "service",
-          L = (t === "product" ? S.products : S.services).filter(
-            (i) => !q || i.name.toLowerCase().includes(q.toLowerCase()),
+        const t = v === "products" ? "product" : "service";
+        const s = q.toLowerCase();
+        const L = (t === "product" ? S.products : S.services).filter((i) => {
+          if (!s) return true;
+          return (
+            (i.name || "").toLowerCase().includes(s) ||
+            (i.category || "").toLowerCase().includes(s) ||
+            (i.shortDescription || "").toLowerCase().includes(s) ||
+            (i.priceDisplay || "").toLowerCase().includes(s)
           );
+        });
         return `<div class="row" style="justify-content:space-between;margin-bottom:18px"><p style="color:var(--mu)">${t === "product" ? "Machines and equipment you manufacture" : "Installation, maintenance, training & custom work"}</p><button class="btn pri" data-new="${t}">＋ Add ${t === "product" ? "Product" : "Service"}</button></div>
  ${
    L.length
@@ -1661,22 +1818,22 @@
  <div class="card sec"><h3><span>4</span>Key features</h3>${lines(i, "features", "Feature")}</div>
  <div class="card sec"><h3><span>5</span>Applications / industries</h3>${lines(i, "applications", "e.g. PEB")}</div>
  <div class="card sec"><h3><span>6</span>Photos</h3>
- <div class="fg"><label>Main photo</label><div class="up">📷 Tap or drop main photo<input type="file" accept="image/*" data-up="main"></div>${
+ <div class="fg"><label>Main photo</label><div class="up" data-up-zone="main">📷 Tap, drop or paste a main photo<input type="file" accept="image/*" data-up="main"></div>${
    ms
      ? `<div class="tg"><div class="tb"><img src="${esc(ms)}"><button data-act="rmMain">✕</button></div></div>`
      : ""
  }</div>
- <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up">🖼️ Add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
+ <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up" data-up-zone="gallery">🖼️ Drop or tap to add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
  <div class="tg">${i.images.gallery
    .map(
      (g, n) =>
        `<div class="tb"><img src="${esc(src(g))}"><button data-rg="${n}">✕</button></div>`,
    )
    .join("")}</div></div></div>
- <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${
+ <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up" data-up-zone="brochure">📄 ${
    i.brochure
-     ? esc(i.brochure.filename || "brochure.pdf") + " attached — tap to replace"
-     : "Tap to attach PDF (optional)"
+     ? esc(i.brochure.filename || "brochure.pdf") + " attached — drop or tap to replace"
+     : "Drop or tap to attach a PDF (optional)"
  }<input type="file" accept="application/pdf" data-up="brochure"></div>${
    i.brochure
      ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro">Remove</button>'
@@ -1693,7 +1850,36 @@
  <div class="card sec"><h3><span>🎨</span>Brand palette (from your logo)</h3><div class="pal">${PAL.map(
    ([n, c]) => `<span style="background:${c}">${n}<br>${c}</span>`,
  ).join("")}</div>
- <p style="color:var(--mu);margin-top:12px;font-size:12.5px">Logo file: <code>images/logo.PNG</code> (shown on a white tile so the navy text stays readable).</p></div>`;
+ <p style="color:var(--mu);margin-top:12px;font-size:12.5px">Logo file: <code>images/logo.PNG</code> · Favicon: <code>images/favicon.ico</code></p></div>`;
+      }
+
+      /* ---------- SHARED UPLOAD HANDLER ---------- */
+      async function handleUpload(kind, files, item) {
+        if (!files.length) return;
+        if (kind === "main") {
+          item.images.main = await compress(files[0]);
+          toast("Main photo added", "ok");
+        } else if (kind === "gallery") {
+          const room = MAXG - item.images.gallery.length;
+          if (room <= 0) {
+            toast("Gallery full", "er");
+            return;
+          }
+          toast("Processing…");
+          for (const f of files.slice(0, room))
+            item.images.gallery.push(await compress(f));
+        } else if (kind === "brochure") {
+          const f = files[0];
+          if (f.size > 8e6 && !confirm("PDF is over 8 MB. Continue?")) return;
+          item.brochure = await new Promise((r) => {
+            const x = new FileReader();
+            x.onload = () => r({ filename: f.name, dataUrl: x.result });
+            x.readAsDataURL(f);
+          });
+          toast("Brochure attached", "ok");
+        }
+        touch();
+        render();
       }
 
       /* ---------- EVENTS ---------- */
@@ -1862,6 +2048,7 @@
             }
         }
       });
+
       document.addEventListener("input", (e) => {
         const t = e.target;
         if (t.id === "q") {
@@ -1891,38 +2078,55 @@
           touch();
         }
       });
+
+      /* ---------- FILE INPUT CHANGE ---------- */
       document.addEventListener("change", async (e) => {
-        const up = e.target.dataset.up,
-          i = cur();
+        const up = e.target.dataset.up;
+        const i = cur();
         if (!up || !i) return;
-        const fs = [...e.target.files];
-        if (!fs.length) return;
-        if (up === "main") {
-          i.images.main = await compress(fs[0]);
-          toast("Main photo added", "ok");
-        }
-        if (up === "gallery") {
-          const room = MAXG - i.images.gallery.length;
-          if (room <= 0) {
-            toast("Gallery full", "er");
-            return;
-          }
-          toast("Processing…");
-          for (const f of fs.slice(0, room))
-            i.images.gallery.push(await compress(f));
-        }
-        if (up === "brochure") {
-          const f = fs[0];
-          if (f.size > 8e6 && !confirm("PDF is over 8 MB. Continue?")) return;
-          i.brochure = await new Promise((r) => {
-            const x = new FileReader();
-            x.onload = () => r({ filename: f.name, dataUrl: x.result });
-            x.readAsDataURL(f);
-          });
-        }
-        touch();
-        render();
+        await handleUpload(up, [...e.target.files], i);
+        e.target.value = ""; // allow re-selecting the same file
       });
+
+      /* ---------- DRAG & DROP ---------- */
+      ["dragenter", "dragover"].forEach((ev) =>
+        document.addEventListener(ev, (e) => {
+          const up = e.target.closest?.(".up");
+          if (!up) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "copy";
+          up.classList.add("dr");
+        }),
+      );
+      ["dragleave", "dragend"].forEach((ev) =>
+        document.addEventListener(ev, (e) => {
+          const up = e.target.closest?.(".up");
+          if (!up) return;
+          // Ignore leave events when moving into a child element
+          if (e.relatedTarget && up.contains(e.relatedTarget)) return;
+          up.classList.remove("dr");
+        }),
+      );
+      document.addEventListener("drop", async (e) => {
+        const up = e.target.closest?.(".up");
+        if (!up) return;
+        e.preventDefault();
+        up.classList.remove("dr");
+        const input = up.querySelector("input[type=file]");
+        const kind = input?.dataset.up;
+        const i = cur();
+        if (!kind || !i) return;
+        const files = [...(e.dataTransfer?.files || [])].filter((f) => {
+          if (kind === "brochure") return /pdf$/i.test(f.type);
+          return /^image\//i.test(f.type);
+        });
+        if (!files.length) {
+          toast("Unsupported file type", "er");
+          return;
+        }
+        await handleUpload(kind, files, i);
+      });
+
       function compress(f) {
         return new Promise((res) => {
           const r = new FileReader();
@@ -1945,12 +2149,14 @@
           r.readAsDataURL(f);
         });
       }
+
       document.addEventListener("keydown", (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "s") {
           e.preventDefault();
-          ghSave(true);
+          if (isAuthed()) ghSave(true);
         }
       });
+
       addEventListener("beforeunload", (e) => {
         saveLocal();
         if (dirty && cloud()) {
@@ -1958,6 +2164,7 @@
           e.returnValue = "";
         }
       });
+
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
           saveLocal();
@@ -1965,10 +2172,11 @@
         }
       });
 
-      /* ---------- BOOT ---------- */
+      /* ---------- BOOT APP DATA ---------- */
       loadLocal();
-      render();
-      // Auto-pull only after auth (the login handler triggers ghLoad if needed).
+      // render() is only meaningful (and safe) once logged in —
+      // the login handler and bootAuth call it when appropriate.
+      if (isAuthed()) render();
     </script>
   </body>
 </html>
