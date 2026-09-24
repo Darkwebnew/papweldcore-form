@@ -51,6 +51,11 @@
         padding: 0;
         -webkit-tap-highlight-color: transparent;
       }
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+      }
       html,
       body {
         background: var(--bg);
@@ -61,9 +66,17 @@
           sans-serif;
         -webkit-font-smoothing: antialiased;
       }
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 100dvh;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: auto;
+      }
       h1,
       h2,
       h3,
+      h4,
       .mont {
         font-family: Montserrat, Inter, sans-serif;
       }
@@ -73,6 +86,7 @@
         border: 0;
         background: none;
         color: inherit;
+        touch-action: manipulation;
       }
       input,
       select,
@@ -106,6 +120,7 @@
         display: flex;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
         padding: 20px;
         background:
           radial-gradient(
@@ -252,14 +267,19 @@
       /* ---------- APP SHELL ---------- */
       .side {
         position: fixed;
-        inset: 0 auto 0 0;
+        top: 0;
+        left: 0;
         width: 268px;
+        height: 100dvh;
         background: linear-gradient(180deg, var(--navy), #0a1230);
         color: #fff;
         display: flex;
         flex-direction: column;
         z-index: 50;
         transition: transform 0.3s;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
       }
       .side::before {
         content: "";
@@ -274,6 +294,7 @@
         border-radius: 14px;
         padding: 12px 14px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        flex: 0 0 auto;
       }
       .logo img {
         width: 100%;
@@ -291,7 +312,7 @@
         text-align: center;
       }
       .nav {
-        flex: 1;
+        flex: 1 0 auto;
         padding: 14px 12px;
       }
       .nav small {
@@ -340,6 +361,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 12px;
         color: rgba(255, 255, 255, 0.6);
+        flex: 0 0 auto;
       }
       .bar {
         height: 6px;
@@ -376,7 +398,7 @@
       }
       .main {
         margin-left: 268px;
-        min-height: 100vh;
+        min-height: 100dvh;
       }
       .top {
         position: sticky;
@@ -386,8 +408,9 @@
         align-items: center;
         gap: 12px;
         padding: 14px 28px;
-        background: rgba(242, 244, 250, 0.85);
+        background: rgba(242, 244, 250, 0.9);
         backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         border-bottom: 1px solid var(--line);
       }
       .top h1 {
@@ -395,19 +418,25 @@
         font-weight: 800;
         letter-spacing: -0.3px;
         flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .top input {
-        max-width: 260px;
+        max-width: 280px;
         padding: 9px 13px;
       }
       .burger {
         display: none;
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         border-radius: 10px;
         background: var(--navy);
         color: #fff;
         font-size: 18px;
+        place-items: center;
+        flex: 0 0 auto;
       }
       .pill {
         display: flex;
@@ -426,6 +455,7 @@
         height: 8px;
         border-radius: 50%;
         background: var(--mu);
+        flex: 0 0 auto;
       }
       .pill.ok i {
         background: var(--ok);
@@ -495,12 +525,12 @@
       .grid {
         display: grid;
         gap: 18px;
-        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
       }
       .stats {
         display: grid;
         gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
         margin-bottom: 22px;
       }
       .card {
@@ -621,6 +651,7 @@
         display: grid;
         place-items: center;
         font-size: 12px;
+        flex: 0 0 auto;
       }
       .fg {
         margin-bottom: 14px;
@@ -780,7 +811,7 @@
       .toast {
         position: fixed;
         left: 50%;
-        bottom: 28px;
+        bottom: calc(28px + env(safe-area-inset-bottom));
         transform: translate(-50%, 30px);
         background: var(--navy);
         color: #fff;
@@ -820,9 +851,117 @@
         text-align: center;
         font: 600 15px Inter, sans-serif;
       }
+
+      /* ---------- CATALOG (dashboard one-by-one adder) ---------- */
+      .cat-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 26px 0 6px;
+      }
+      .cat-head h3 {
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .cat-count {
+        font: 700 11.5px Montserrat;
+        background: linear-gradient(135deg, #ecfdf5, #e0e7ff);
+        color: #1e3a8a;
+        border: 1px solid #c7d2fe;
+        padding: 5px 11px;
+        border-radius: 99px;
+        white-space: nowrap;
+      }
+      .cat-hint {
+        color: var(--mu);
+        font-size: 12.5px;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .cat-hint b {
+        color: var(--b);
+      }
+      .cat-it {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: 0.2s;
+      }
+      .cat-it:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(11, 21, 51, 0.1);
+      }
+      .cat-th {
+        position: relative;
+        height: 128px;
+        background: linear-gradient(135deg, #eef1fb, #e2e8f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .cat-th img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cat-ph {
+        font-size: 34px;
+        opacity: 0.55;
+      }
+      .cat-ib {
+        padding: 12px 14px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+      .cat-ib h4 {
+        font: 700 13.5px Montserrat;
+        line-height: 1.32;
+        margin-bottom: 2px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 36px;
+      }
+      .cat-meta {
+        color: var(--mu);
+        font-size: 11.5px;
+        margin-bottom: 10px;
+      }
+      .cat-btn {
+        margin-top: auto;
+        width: 100%;
+        justify-content: center;
+        padding: 9px 12px;
+        font-size: 12.5px;
+      }
+      .cat-btn.added {
+        background: #ecfdf5;
+        color: #047857;
+        border-color: #a7f3d0;
+        cursor: default;
+        opacity: 1;
+      }
+      .cat-btn.added:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* ================= MOBILE ================= */
       @media (max-width: 860px) {
         .side {
+          width: min(300px, 84vw);
           transform: translateX(-100%);
+          box-shadow: 0 0 46px rgba(0, 0, 0, 0.45);
         }
         .side.open {
           transform: none;
@@ -831,7 +970,7 @@
           margin-left: 0;
         }
         .burger {
-          display: block;
+          display: grid;
         }
         .ov.show {
           display: block;
@@ -840,53 +979,129 @@
           background: rgba(0, 0, 0, 0.5);
           z-index: 45;
         }
-        /* ✅ FIX #2 — mobile top bar: keep the search visible */
+
+        /* --- top bar: 2 tidy rows, everything reachable --- */
         .top {
           padding: 10px 12px;
           gap: 8px;
           flex-wrap: wrap;
         }
-        .top h1 {
-          font-size: 16px;
-          flex: 1;
-          order: 1;
-          min-width: 0;
-        }
         .burger {
           order: 0;
         }
-        .top input {
-          display: block;
-          max-width: none;
-          flex: 1 0 100%;
-          order: 4;
-          padding: 8px 12px;
-          font-size: 13px;
+        .top h1 {
+          order: 1;
+          flex: 1 1 110px;
+          font-size: 16px;
         }
         .pill {
           order: 2;
-          padding: 7px 11px;
+          padding: 7px 10px;
           font-size: 11px;
         }
-        #saveNow {
+        #q {
           order: 3;
-          padding: 9px 13px;
-          font-size: 12px;
+          flex: 1 1 140px;
+          max-width: none;
+          padding: 9px 12px;
         }
+        #saveNow {
+          order: 4;
+          flex: 0 0 auto;
+          padding: 10px 14px;
+        }
+
         .pg {
-          padding: 16px 14px 60px;
+          padding: 14px 12px calc(80px + env(safe-area-inset-bottom));
         }
+
+        .grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .stat {
+          padding: 14px;
+        }
+        .stat h2 {
+          font-size: 24px;
+        }
+
         .g2 {
           grid-template-columns: 1fr;
         }
-        .edtop {
-          top: 60px;
+        .sec {
+          padding: 16px 14px;
         }
-        /* Prevent iOS Safari from auto-zooming on input focus */
+        .th {
+          height: 190px;
+        }
+
+        /* catalog compact on phones */
+        .cat-th {
+          height: 160px;
+        }
+        .cat-ib h4 {
+          font-size: 14px;
+          min-height: 0;
+        }
+        .cat-btn {
+          padding: 11px 12px;
+          font-size: 13px;
+        }
+        .cat-head h3 {
+          font-size: 15px;
+        }
+
+        /* editor action bar: not sticky on phones, wraps nicely */
+        .edtop {
+          position: static;
+          padding: 12px;
+        }
+        .edtop h2 {
+          order: -1;
+          flex: 1 1 100%;
+          font-size: 15px;
+          white-space: normal;
+        }
+        .edtop .btn {
+          flex: 1 1 42%;
+          justify-content: center;
+          padding: 10px 8px;
+          font-size: 12px;
+        }
+
+        .row .btn {
+          flex: 1 1 auto;
+          justify-content: center;
+        }
+
+        .tg {
+          grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+        }
+
+        .login-ov {
+          padding: 14px;
+        }
+        .login-box {
+          padding: 26px 20px 22px;
+          border-radius: 18px;
+        }
+
+        /* prevent iOS auto-zoom on focus */
         input,
         select,
         textarea {
           font-size: 16px !important;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .stats {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -1003,7 +1218,7 @@
         <div class="top">
           <button class="burger" id="bg">☰</button>
           <h1 id="ttl">Dashboard</h1>
-          <input id="q" placeholder="🔍 Search…" />
+          <input id="q" placeholder="🔍 Search catalog or products…" />
           <div class="pill" id="pill"><i></i><span id="pt">Local</span></div>
           <button class="btn pri" id="saveNow">💾 Save</button>
         </div>
@@ -1094,14 +1309,12 @@
         pw.focus();
       });
 
-      document
-        .getElementById("lp")
-        .addEventListener("keyup", (e) => {
-          try {
-            const on = e.getModifierState && e.getModifierState("CapsLock");
-            capsWarn.style.display = on ? "block" : "none";
-          } catch (_) {}
-        });
+      document.getElementById("lp").addEventListener("keyup", (e) => {
+        try {
+          const on = e.getModifierState && e.getModifierState("CapsLock");
+          capsWarn.style.display = on ? "block" : "none";
+        } catch (_) {}
+      });
       document
         .getElementById("lp")
         .addEventListener("blur", () => (capsWarn.style.display = "none"));
@@ -1227,6 +1440,10 @@
         "Featured",
         "Premium",
         "Custom Build",
+        "Precision",
+        "Turnkey",
+        "PEB Specialist",
+        "Complete Line",
       ];
       const PAL = [
         ["Flame", "#f4511e"],
@@ -1236,6 +1453,919 @@
         ["Violet", "#7c3aed"],
         ["Navy", "#0b1533"],
       ];
+
+      /* ============================================================
+         ⬇⬇⬇  FULL MACHINE CATALOG — 37 ITEMS  ⬇⬇⬇
+         Compact keys:
+           id = stable id, n = name, c = category (source), b = badge
+           d  = description, i = main image, g = gallery
+           s  = specs [[label,value],...]
+           f  = features, a = applications
+         ============================================================ */
+      const CATMAP = {
+        "H Beam Welding Machine": "H-Beam Welding",
+        "Robotic Welding System": "Robotic Welding System",
+        "Robotic Welding Automation": "Robotic Welding Automation",
+        "Robotic Welding Cell": "Robotic Welding Cell",
+        "CNC Machines": "CNC Machines",
+        "PEB Beam Welding Automation": "PEB Beam Welding Automation",
+        "CNC Plate Drilling Machine": "CNC Plate Drilling",
+        "Beam Welding Line": "Beam Welding Line",
+        "New Items": "New Items",
+      };
+
+      const CATALOG = [
+        /* ---------------- H BEAM WELDING MACHINE ---------------- */
+        {
+          id: "h-beam-1",
+          n: "PTW - Pull Thru Welding Machine",
+          c: "H Beam Welding Machine",
+          b: "Best Seller",
+          d: "An automatic pull-through welding system built for continuous, heavy-duty H-Beam fabrication. Submerged arc welding delivers deep, consistent penetration across beam lengths up to 6 metres, with AC/DC power switching for varying material grades.",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611753209/ML/RU/GF/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611753213/SR/CW/OV/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW (Submerged Arc)"],
+            ["Max Beam Height", "800 mm"],
+            ["Beam Length", "6 m"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+          ],
+          f: [
+            "Continuous pull-through welding for high productivity",
+            "Deep penetration SAW process for structural integrity",
+            "Programmable settings for varying beam sizes",
+            "Minimal post-weld cleanup required",
+            "12-month parts warranty with Chennai-based support",
+          ],
+          a: [
+            "Structural Steel",
+            "Heavy Fabrication",
+            "Shipbuilding",
+            "PEB",
+            "Infrastructure",
+            "Mining & Earthmoving",
+          ],
+        },
+        {
+          id: "h-beam-2",
+          n: "PTW - Pull Thru Welding Machine",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "A PTW (Pull-Through Welding) machine is a highly specialized, automated industrial system engineered specifically for the continuous fabrication of structural H-beams, I-beams, and tapered girders...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585696387/NP/OE/HS/106518927/laser-beam-expander-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585696387/NP/OE/HS/106518927/laser-beam-expander-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611750120/TT/IL/IV/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611750125/FE/NO/QM/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Beam Length", "6 m"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+          ],
+          f: [
+            "High-speed pull-through design",
+            "Fixed torch configuration",
+            "PLC controlled",
+          ],
+          a: [],
+        },
+        {
+          id: "h-beam-3",
+          n: "Railway H Beam Fabrication Line For Bridge Beam Welding",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "A railway H-beam fabrication line for bridge beam welding is a heavy-duty, highly automated industrial production system engineered to manufacture massive structural steel girders...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585697817/BY/UY/DK/106518927/infrared-light-beam-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585697817/BY/UY/DK/106518927/infrared-light-beam-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611747977/PE/PZ/OC/106518927/railway-h-beam-fabrication-line-for-bridge-beam-welding-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611747979/AE/BM/YA/106518927/railway-h-beam-fabrication-line-for-bridge-beam-welding-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Beam Length", "6 m"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "h-beam-4",
+          n: "H Beam Tack Welding Machine",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "An H-beam tack welding machine is a specialized, highly automated fabrication system designed to clamp and securely tack-weld three individual steel plates...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608941/LY/CJ/YU/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608941/LY/CJ/YU/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611755510/EY/KU/VD/106518927/h-beam-tack-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611755511/IN/AX/CK/106518927/h-beam-tack-welding-machine-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Beam Length", "6 m"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "h-beam-5",
+          n: "H Beam Flipping Device",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "An H-beam flipping device (also referred to as a beam rotator, structural flipper, or tilting machine) is an industrial material-handling system built to safely lift, spin, and reposition large structural steel members...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585698552/AB/IR/GE/106518927/electron-beam-welders-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585698552/AB/IR/GE/106518927/electron-beam-welders-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611756297/RE/WW/JK/106518927/h-beam-flipping-device-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611756301/HX/UT/DS/106518927/h-beam-flipping-device-500x500.jpg",
+          ],
+          s: [
+            ["Beam Height", "Up to 800 mm"],
+            ["Beam Width", "Up to 400 mm"],
+            ["Automation Grade", "Automatic"],
+            ["Flange Thickness", "Up to 20 mm"],
+            ["Web Thickness", "Up to 8 mm"],
+            ["Power Source", "Hydraulic"],
+            ["Travel Speed", "Up to 3 m/min"],
+            ["Welding Process", "TIG, SAW, MIG"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "h-beam-6",
+          n: "H Beam Assembly Machine",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "An H-beam assembly machine (often called an H-beam spot welding or tacking machine) is an automated system used to align, clamp, and tack-weld three independent steel plates...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585685913/YN/OP/TS/106518927/h-beam-assembly-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585685913/YN/OP/TS/106518927/h-beam-assembly-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611755934/MK/XK/IB/106518927/h-beam-assembly-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611755935/DO/RG/VM/106518927/h-beam-assembly-machine-500x500.jpg",
+          ],
+          s: [
+            ["Beam Height", "Up to 800 mm"],
+            ["Beam Width", "Up to 400 mm"],
+            ["Automation Grade", "Automatic"],
+            ["Flange Thickness", "Up to 20 mm"],
+            ["Web Thickness", "Up to 8 mm"],
+            ["Power Source", "Hydraulic"],
+            ["Travel Speed", "Up to 3 m/min"],
+            ["Welding Process", "SAW"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "h-beam-7",
+          n: "H Beam Welding Machine",
+          c: "H Beam Welding Machine",
+          b: "",
+          d: "An H-beam welding machine is heavy-duty industrial hardware designed to automate the assembly, positioning, and seam welding of steel flange and web plates into structural H-beams or I-beams...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585686944/UP/LY/NG/106518927/fully-automatic-trimming-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585686944/UP/LY/NG/106518927/fully-automatic-trimming-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611746635/BL/TK/GD/106518927/h-beam-welding-machine-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Single Head"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+            ["Beam Length", "6 m"],
+            ["Control System", "PLC"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- ROBOTIC WELDING SYSTEM ---------------- */
+        {
+          id: "robotic-1",
+          n: "PAP Post Beam Robotic Welding",
+          c: "Robotic Welding System",
+          b: "Featured",
+          d: "Post beam robotic welding system for automated structural steel fabrication...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/609988427/JC/OM/LF/106518927/download-2026-05-22t132257-855-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609988427/JC/OM/LF/106518927/download-2026-05-22t132257-855-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609988428/QX/ZW/VP/106518927/download-2026-05-22t132315-689-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609988430/JX/EO/RX/106518927/images-2026-05-22t132509-791-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Welding process", "MIG MAG"],
+            ["Payload", "10 kg"],
+            ["Reach", "2000 mm"],
+            ["Controller brand", "Yaskawa"],
+            ["Positioner axis", "1 axis"],
+            ["System layout", "Track mounted"],
+            ["Wire feeder type", "Push pull"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "robotic-2",
+          n: "PAP Robotic Welding System",
+          c: "Robotic Welding System",
+          b: "",
+          d: "High-performance robotic welding system for complex geometries...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/609992696/FZ/YB/VG/106518927/download-2026-05-22t134419-997-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609992696/FZ/YB/VG/106518927/download-2026-05-22t134419-997-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609992698/BX/KL/SF/106518927/download-2026-05-22t134432-664-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609992701/LP/AR/ES/106518927/download-2026-05-22t134436-757-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Welding process", "MIG MAG"],
+            ["Payload", "12 kg"],
+            ["Reach", "1800 mm"],
+            ["Controller brand", "Yaskawa"],
+            ["Positioner axis", "1 axis"],
+            ["System layout", "Twin station"],
+            ["Wire feeder type", "Push pull"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "robotic-3",
+          n: "PAP Axle Bracket Welding Machine",
+          c: "Robotic Welding System",
+          b: "",
+          d: "Specialized axle bracket welding machine...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/611754320/AM/OV/QC/106518927/axle-bracket-welding-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754320/AM/OV/QC/106518927/axle-bracket-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754323/OA/UD/GO/106518927/axle-bracket-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585684642/AE/KA/AP/106518927/beam-welding-line-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            [
+              "Welding process",
+              "MIG MAG, Plasma, Spot weld, Laser weld, TIG",
+            ],
+            ["Payload", "6 kg"],
+            ["Reach", "1400 mm"],
+            ["Controller brand", "ABB"],
+            ["Positioner axis", "No positioner"],
+            ["System layout", "Fixed table"],
+            ["Wire feeder type", "Push type"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- CNC MACHINES ---------------- */
+        {
+          id: "cnc-1",
+          n: "CNC Flame Cutting Machine",
+          c: "CNC Machines",
+          b: "Precision",
+          d: "A CNC flame cutting machine (also known as an oxy-fuel CNC cutter) is an automated industrial system that uses a combination of fuel gas and pure oxygen to slice through thick carbon steel...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609021/KS/JD/GH/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609021/KS/JD/GH/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611756734/YV/XI/UU/106518927/cnc-flame-cutting-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611756738/KS/CA/OS/106518927/cnc-flame-cutting-machine-500x500.jpg",
+          ],
+          s: [
+            ["Cutting Process", "Plasma"],
+            ["Cutting Area", "1300×2500 mm"],
+            [
+              "Supported Material",
+              "Mild Steel, Stainless Steel, Aluminium",
+            ],
+            ["Max Cutting Thickness", "6 mm"],
+            ["Automation Level", "Semi Automatic"],
+            ["CNC Controller", "Hypertherm"],
+            ["Drive Type", "Gantry"],
+            ["Application", "Profile Cutting, Sheet Cutting"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "cnc-2",
+          n: "CNC Strip Cutting Machine",
+          c: "CNC Machines",
+          b: "",
+          d: "A CNC strip cutting machine is an automated heavy-duty industrial fabrication system engineered to slice large raw steel plates into multiple uniform, straight, long parallel strips simultaneously...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609047/BP/EM/LJ/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609047/BP/EM/LJ/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609979706/IQ/RA/NC/106518927/cnc-strip-cutting-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609979711/UU/OZ/NA/106518927/cnc-strip-cutting-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609979713/IW/YO/IH/106518927/cnc-strip-cutting-machine-500x500.jpg",
+          ],
+          s: [
+            ["Cutting Process", "Laser"],
+            ["Cutting Area", "1300×2500 mm"],
+            ["Supported Material", "Mild Steel, Aluminium, Stainless Steel"],
+            ["Max Cutting Thickness", "10 mm"],
+            ["Automation Level", "Semi Automatic"],
+            ["CNC Controller", "Hypertherm"],
+            ["Drive Type", "Gantry"],
+            ["Application", "Sheet Cutting"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "cnc-3",
+          n: "Heavy Duty Industrial CNC Gantry Milling Machine",
+          c: "CNC Machines",
+          b: "",
+          d: "This high-precision CNC gantry milling machine is engineered for heavy-duty industrial metal fabrication and machining...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/7/624529811/JO/OP/OB/106518927/h-beam-drilling-machine-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/7/624529811/JO/OP/OB/106518927/h-beam-drilling-machine-500x500.jpeg",
+          ],
+          s: [],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- ROBOTIC WELDING CELL ---------------- */
+        {
+          id: "robotic-cell-1",
+          n: "Robotic Welding Cell",
+          c: "Robotic Welding Cell",
+          b: "Turnkey",
+          d: "A robotic welding cell is a completely integrated, self-contained automated manufacturing workspace designed to execute high-speed, repeatable welds...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585702944/CZ/DM/ZM/106518927/robotic-welding-cell-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585702944/CZ/DM/ZM/106518927/robotic-welding-cell-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611751836/SC/QW/EW/106518927/robotic-welding-cell-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611751838/AH/WZ/TP/106518927/robotic-welding-cell-500x500.jpg",
+          ],
+          s: [
+            ["Cell Type", "Single Station"],
+            ["Welding Process", "MIG MAG"],
+            ["Robot Brand", "Fanuc"],
+            ["Number of Robots", "1 Robot"],
+            ["Positioners", "Turntable"],
+            ["Part Weight Capacity", "Up to 250 kg"],
+            ["Safety Level", "Fenced Cell"],
+            ["Control System", "PLC Based"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "robotic-cell-2",
+          n: "Robotic MIG Welding Cell",
+          c: "Robotic Welding Cell",
+          b: "",
+          d: "A robotic MIG welding cell is a specialized, automated workspace designed to execute high-speed Gas Metal Arc Welding (GMAW/MIG) and Flux-Cored Arc Welding (FCAW)...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585699275/GT/QF/PD/106518927/electric-gas-stove-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585699275/GT/QF/PD/106518927/electric-gas-stove-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611751073/VI/VQ/PJ/106518927/robotic-mig-welding-cell-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611751077/DB/GO/UU/106518927/robotic-mig-welding-cell-500x500.jpg",
+          ],
+          s: [
+            ["Cell Type", "Single Station"],
+            ["Welding Process", "MIG MAG"],
+            ["Robot Brand", "Fanuc"],
+            ["Number of Robots", "1 Robot"],
+            [
+              "Positioners",
+              "Drop Center, Head Tail Stock, Tilting Table, Skyhook, Turntable",
+            ],
+            ["Part Weight Capacity", "Up to 250 kg"],
+            ["Safety Level", "Fenced Cell"],
+            ["Control System", "PLC Based"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- ROBOTIC WELDING AUTOMATION ---------------- */
+        {
+          id: "robotic-auto-1",
+          n: "PAP Heavy Fabrication Robotic Welding System",
+          c: "Robotic Welding Automation",
+          b: "",
+          d: "A heavy fabrication robotic welding system is an advanced, automated manufacturing cell engineered to weld massive, thick-gauge structural components...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585688717/QR/XG/GD/106518927/h-beam-assembly-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585688717/QR/XG/GD/106518927/h-beam-assembly-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611753776/IU/GI/BJ/106518927/heavy-fabrication-robotic-welding-system-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611753781/JV/ON/TS/106518927/heavy-fabrication-robotic-welding-system-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Welding process", "MIG MAG"],
+            ["Payload", "6 kg"],
+            ["Reach", "1400 mm"],
+            ["Controller brand", "ABB"],
+            ["Positioner axis", "1 axis"],
+            ["System layout", "Fixed table"],
+            ["Wire feeder type", "Push type"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "robotic-auto-2",
+          n: "PAP Robotic Excavator Boom Welding Machine",
+          c: "Robotic Welding Automation",
+          b: "",
+          d: "The Primo Robotic Excavator Boom Welding Machine is a highly automated turnkey industrial workstation...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610155069/LS/IH/ZF/106518927/download-2026-05-22t190338-910-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610155069/LS/IH/ZF/106518927/download-2026-05-22t190338-910-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610155070/YX/KD/OU/106518927/images-2026-05-22t190348-243-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610155071/KL/DV/MV/106518927/download-2026-05-22t190426-198-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Welding process", "MIG MAG"],
+            ["Payload", "6 kg"],
+            ["Reach", "1600 mm"],
+            ["Controller brand", "ABB"],
+            ["Positioner axis", "No positioner"],
+            ["System layout", "Fixed table"],
+            ["Wire feeder type", "Push type"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "robotic-auto-3",
+          n: "Robotic Diesel Tank Welding",
+          c: "Robotic Welding Automation",
+          b: "",
+          d: "Robotic diesel tank welding is an automated industrial process used to fabricate heavy-duty fuel cells for trucks, agricultural machinery, generators, and locomotives...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585687738/DC/GO/MZ/106518927/laser-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585687738/DC/GO/MZ/106518927/laser-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754203/GR/YV/ZP/106518927/robotic-diesel-tank-welding-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754205/IF/ZF/EV/106518927/robotic-diesel-tank-welding-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Payload", "6 kg"],
+            ["Welding process", "MIG MAG"],
+            ["Reach", "1400 mm"],
+            ["Brand", "ABB"],
+            ["Mounting", "Floor, Track mounted"],
+            ["Protection class", "IP54"],
+            ["Controller model", "R30iB"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- PEB BEAM WELDING AUTOMATION ---------------- */
+        {
+          id: "peb-1",
+          n: "PEB Beam Welding Machine",
+          c: "PEB Beam Welding Automation",
+          b: "PEB Specialist",
+          d: "A PEB (Pre-Engineered Building) beam welding machine is a specialized, high-efficiency fabrication system engineered specifically to assemble and weld variable cross-section steel profiles...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610157259/LI/YO/OT/106518927/download-2026-05-22t191322-040-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157259/LI/YO/OT/106518927/download-2026-05-22t191322-040-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157260/TO/JF/BO/106518927/download-2026-05-22t191326-126-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157261/YW/RB/DW/106518927/download-2026-05-22t191330-367-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Single Head"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+            ["Line Type", "H Beam Line"],
+            ["Conveyor Length", "15 m"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "peb-2",
+          n: "PAP Automatic Beam Welding Line",
+          c: "PEB Beam Welding Automation",
+          b: "",
+          d: "An automatic beam welding line integrates individual fabrication machines into a single, continuous automated loop to manufacture structural steel H-beams, I-beams, or box girders...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610157869/BY/NU/TS/106518927/download-2026-05-22t191647-955-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157869/BY/NU/TS/106518927/download-2026-05-22t191647-955-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157870/VL/WA/XI/106518927/download-2026-05-22t191655-258-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157871/BY/VI/CX/106518927/download-2026-05-22t191659-816-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Single Head"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+            ["Line Type", "H Beam Line"],
+            ["Conveyor Length", "15 m"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- CNC PLATE DRILLING ---------------- */
+        {
+          id: "drilling-1",
+          n: "CNC Plate Drilling Machine",
+          c: "CNC Plate Drilling Machine",
+          b: "",
+          d: "A CNC plate drilling machine is a specialized, automated industrial tool designed to drill, tap, countersink, and mill structural steel plates...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/2/585693209/VO/CB/YW/106518927/soldering-machines-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/2/585693209/VO/CB/YW/106518927/soldering-machines-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611747063/KR/OM/BS/106518927/cnc-plate-drilling-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611747116/PL/CI/HD/106518927/cnc-plate-drilling-machine-500x500.jpg",
+          ],
+          s: [
+            ["Max Plate Size", "1000×1000 mm"],
+            ["Max Drill Diameter", "Up to 25 mm"],
+            ["Axis Count", "2 Axis"],
+            ["Controller Brand", "Fanuc"],
+            ["Spindle Speed", "Up to 3000 rpm"],
+            ["Clamping Type", "Hydraulic"],
+            ["Tool Changer", "Without ATC"],
+            ["Coolant System", "Flood Coolant"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "drilling-2",
+          n: "Heat Exchanger Tube Sheet Drilling Machine",
+          c: "CNC Plate Drilling Machine",
+          b: "",
+          d: "A CNC Tube Sheet Drilling Machine is a specialized gantry-style or deep-hole machining center engineered to drill hundreds to thousands of high-precision holes in thick metal plates...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/611757831/IT/AV/BV/106518927/heat-exchanger-tube-sheet-drilling-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611757831/IT/AV/BV/106518927/heat-exchanger-tube-sheet-drilling-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611757832/DH/JW/YB/106518927/heat-exchanger-tube-sheet-drilling-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611757833/MK/EW/VT/106518927/heat-exchanger-tube-sheet-drilling-machine-500x500.jpg",
+          ],
+          s: [
+            ["Tube Sheet Thickness", "Up to 40 mm"],
+            ["Tube Hole Diameter", "Up to 12 mm"],
+            ["Tube Pattern", "Triangular"],
+            ["Tube Sheet Material", "Carbon Steel"],
+            ["Positional Tolerance", "Standard"],
+            ["Machine Type", "CNC Drill"],
+            ["Hole Finish", "Drilled"],
+            ["Application", "Heat Exchanger"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "drilling-3",
+          n: "End Flange Drilling Machine",
+          c: "CNC Plate Drilling Machine",
+          b: "",
+          d: "End Flange Drilling Machine",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610158289/TQ/OI/EL/106518927/download-2026-05-22t191831-404-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610158289/TQ/OI/EL/106518927/download-2026-05-22t191831-404-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610158291/ZJ/EB/BH/106518927/download-2026-05-22t191838-842-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610158294/WR/LQ/OD/106518927/download-2026-05-22t191845-372-500x500.jpg",
+          ],
+          s: [
+            ["Axis Count", "2 Axis"],
+            ["Max Drill Diameter", "Up to 10 mm"],
+            ["Table Size", "500×300 mm"],
+            ["Spindle Speed", "Up to 3000 rpm"],
+            ["Spindle Taper", "BT30"],
+            ["Controller Brand", "Fanuc"],
+            ["Tool Changer", "Without ATC"],
+            ["Coolant System", "Flood Coolant"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- BEAM WELDING LINE ---------------- */
+        {
+          id: "beam-line-1",
+          n: "PAP Beam Welding Line",
+          c: "Beam Welding Line",
+          b: "Complete Line",
+          d: "A beam welding line is a fully integrated, high-capacity industrial production system designed to manufacture structural steel H-beams, I-beams, and tapered girders from raw steel plates...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608917/FF/RA/IN/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608917/FF/RA/IN/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754978/QX/BN/NV/106518927/beam-welding-line-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611754979/CF/NC/NY/106518927/beam-welding-line-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Triple Head"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+            ["Line Type", "H Beam Line"],
+            ["Conveyor Length", "15 m"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "beam-line-2",
+          n: "PAP Heavy Structural Plate Girder Welding Machine",
+          c: "Beam Welding Line",
+          b: "",
+          d: "A heavy structural plate girder welding machine is an industrial fabrication system designed to automate the deep-penetration seam welding of massive, thick steel plates into heavy-duty structural girders...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610156918/QT/DR/RG/106518927/download-2026-05-22t190522-713-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610156918/QT/DR/RG/106518927/download-2026-05-22t190522-713-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610156919/RC/HJ/GG/106518927/download-2026-05-22t190526-883-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610156920/EL/UO/NX/106518927/download-2026-05-22t190532-535-500x500.jpg",
+          ],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Double Head"],
+            ["Flange Thickness", "8–20 mm"],
+            ["Web Thickness", "6–16 mm"],
+            ["Line Type", "H Beam Line"],
+            ["Conveyor Length", "15 m"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "beam-line-3",
+          n: "PAP Heavy I Beam Fabrication Line",
+          c: "Beam Welding Line",
+          b: "",
+          d: "PAP Heavy I Beam Fabrication Line",
+          i: "",
+          g: [],
+          s: [
+            ["Conveyor Type", "I Beam"],
+            ["Welding Process", "SAW + MIG"],
+            ["Plant Type", "Conveyorised"],
+            ["Max Beam Height", "800 mm"],
+            ["Automation Grade", "Semi Automatic"],
+            ["Line Speed", "2 m/min"],
+            ["Booth Type", "Cartridge Filter"],
+            ["Max Part Size", "3000×1200×1200 mm"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "beam-line-4",
+          n: "Heavy Structural Plate Girder Welding Machine",
+          c: "Beam Welding Line",
+          b: "",
+          d: "Heavy Structural Plate Girder Welding Machine",
+          i: "",
+          g: [],
+          s: [["Automation Grade", "Automatic"]],
+          f: [],
+          a: [],
+        },
+        {
+          id: "beam-line-5",
+          n: "H Beam Welding Production Line",
+          c: "Beam Welding Line",
+          b: "",
+          d: "H Beam Welding Production Line",
+          i: "",
+          g: [],
+          s: [
+            ["Automation Grade", "Semi Automatic"],
+            ["Country of Origin", "India"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "beam-line-6",
+          n: "PAP Beam Welding Line",
+          c: "Beam Welding Line",
+          b: "",
+          d: "PAP Beam Welding Line",
+          i: "",
+          g: [],
+          s: [
+            ["Automation Grade", "Automatic"],
+            ["Welding Process", "SAW"],
+            ["Max Beam Height", "800 mm"],
+            ["Welding Head", "Single Head"],
+            ["Line Type", "H Beam Line"],
+            ["Country of Origin", "India"],
+          ],
+          f: [],
+          a: [],
+        },
+
+        /* ---------------- NEW ITEMS ---------------- */
+        {
+          id: "new-1",
+          n: "PAP Laser Cutting Machines",
+          c: "New Items",
+          b: "",
+          d: "Laser cutting machines are highly precise thermal fabrication systems that use a concentrated, high-power laser beam to melt, burn, or vaporize material along a programmed path...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/609989976/YE/MI/UD/106518927/download-2026-05-22t133639-513-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609989976/YE/MI/UD/106518927/download-2026-05-22t133639-513-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609989978/LT/VX/CK/106518927/download-2026-05-22t133644-529-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611745217/EQ/AW/XD/106518927/laser-cutting-machines-500x500.jpg",
+          ],
+          s: [
+            ["Machine Type", "Fiber Laser"],
+            ["Working Area", "300x200 mm"],
+            ["Laser Power", "40 W"],
+            ["Cutting Material", "Aluminium, MDF, SS, MS"],
+            ["Automation Level", "Automatic"],
+            ["Cooling Type", "Water Cooled"],
+            ["Table Type", "Flat Bed"],
+            ["Country Of Origin", "China"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-2",
+          n: "Welding Positioner Rotator",
+          c: "New Items",
+          b: "",
+          d: "A welding positioner rotator is a mechanical device used to hold, tilt, and spin a workpiece 360 degrees, allowing a welder to remain in a flat, comfortable position while executing circumferential or complex welds...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608989/NF/EA/TZ/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608989/NF/EA/TZ/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611757201/AK/QC/LN/106518927/welding-rotator-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/611757205/EQ/GQ/RS/106518927/welding-rotator-500x500.jpg",
+          ],
+          s: [
+            ["Rotator Type", "Self Aligning"],
+            ["Load Capacity", "1–5 Ton"],
+            ["Adjustment", "Bolt Adjust"],
+            ["Wheel Material", "Rubber"],
+            ["Drive Type", "AC Motor"],
+            ["Speed Range", "0.1–1 m/min"],
+            ["Control Type", "Pendant Control"],
+            ["Tilt Adjustment", "No Tilt"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-3",
+          n: "Industrial Robotic Arm",
+          c: "New Items",
+          b: "",
+          d: "An industrial robotic arm is a programmable, multi-axis mechanical manipulator designed to execute highly repetitive, precise, and dangerous tasks in manufacturing environments...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/609991669/CC/XX/RK/106518927/download-2026-05-22t134004-676-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609991669/CC/XX/RK/106518927/download-2026-05-22t134004-676-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609991673/YT/UM/IL/106518927/download-2026-05-22t134009-282-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609991676/PS/KL/XU/106518927/download-2026-05-22t134116-850-500x500.jpg",
+          ],
+          s: [
+            ["Axis Count", "3 Axis"],
+            ["Payload Capacity", "Upto 2 kg"],
+            ["Reach", "Upto 500 mm"],
+            ["Application", "Pick And Place"],
+            ["Mounting", "Table Top"],
+            ["Robot Type", "Industrial"],
+            ["Drive Type", "Servo Motor"],
+            ["Repeatability", "±0.1 mm"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-4",
+          n: "CNC Plasma Cutting Machine",
+          c: "New Items",
+          b: "",
+          d: "CNC plasma cutting machines use a computer-controlled, high-velocity jet of ionized gas to slice through electrically conductive metals like carbon steel, stainless steel, and aluminum...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/610157633/DV/OI/LC/106518927/download-2026-05-22t191508-967-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157633/DV/OI/LC/106518927/download-2026-05-22t191508-967-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157635/NM/SZ/NS/106518927/download-2026-05-22t191535-640-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/610157636/RO/FJ/NS/106518927/download-2026-05-22t191541-743-500x500.jpg",
+          ],
+          s: [
+            ["Table size", "1300x2500 mm"],
+            ["Plasma power", "63 A"],
+            ["Max mild steel cut", "12 mm"],
+            ["Cutting speed", "2000 mm/min"],
+            ["CNC controller", "Hypertherm"],
+            ["Torch height control", "Automatic THC"],
+            ["Drive type", "Servo drive"],
+            ["Gas type", "Air"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-5",
+          n: "Structural Steel H Beam",
+          c: "New Items",
+          b: "",
+          d: "Structural steel H-beams—broadly classified under wide-flange beams (W-shapes)—are load-bearing rolled or fabricated steel members featuring a profile that resembles a capital letter 'H'...",
+          i: "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608887/WG/VO/QE/106518927/image-500x500.jpeg",
+          g: [
+            "https://5.imimg.com/data5/WA_9696/Default/2026/3/592608887/WG/VO/QE/106518927/image-500x500.jpeg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609980105/RU/FB/KJ/106518927/structural-steel-h-beam-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609980112/QU/JO/OJ/106518927/structural-steel-h-beam-500x500.jpg",
+          ],
+          s: [
+            ["Length", "6 m"],
+            ["Material Type", "Stainless Steel"],
+            ["Brand", "Rolling"],
+            ["Dimension", "150 x 75 mm"],
+            ["Thickness", "6 mm"],
+            ["Grade", "E350"],
+            ["Weight", "37.3 kg/m"],
+            ["Color", "Black"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-6",
+          n: "Axle Robotic Welding Machine",
+          c: "New Items",
+          b: "",
+          d: "An axle robotic welding machine is an advanced, automated workstation configured to perform high-precision, heavy-duty seam welds on automotive, trailer, truck, and railway axles...",
+          i: "https://5.imimg.com/data5/SELLER/Default/2026/5/609981769/YP/NW/GW/106518927/axle-robotic-welding-machine-500x500.jpg",
+          g: [
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609981769/YP/NW/GW/106518927/axle-robotic-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609981771/FU/CC/ZW/106518927/axle-robotic-welding-machine-500x500.jpg",
+            "https://5.imimg.com/data5/SELLER/Default/2026/5/609981775/QY/ND/WH/106518927/axle-robotic-welding-machine-500x500.jpg",
+          ],
+          s: [
+            ["Robot axes", "6 axis"],
+            ["Payload", "50 kg"],
+            ["Welding process", "TIG, MIG MAG, Spot weld, Laser weld"],
+            ["Reach", "1400 mm"],
+            ["Mounting", "Floor"],
+            ["Protection class", "IP54"],
+            ["Controller model", "R30iB"],
+          ],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-7",
+          n: "H Beam Flipping & Transfer Unit",
+          c: "New Items",
+          b: "",
+          d: "H Beam Flipping & Transfer Unit",
+          i: "",
+          g: [],
+          s: [],
+          f: [],
+          a: [],
+        },
+        {
+          id: "new-8",
+          n: "CNC H Beam Drilling Machine",
+          c: "New Items",
+          b: "",
+          d: "CNC H Beam Drilling Machine",
+          i: "",
+          g: [],
+          s: [],
+          f: [],
+          a: [],
+        },
+      ];
+
       const SAMPLES = {
         product: {
           name: "PTW - Pull Thru Welding Machine",
@@ -1380,6 +2510,7 @@
         i.badge = i.badge || "";
         i.priceDisplay = i.priceDisplay || "";
         i.shortDescription = i.shortDescription || "";
+        i.catalogId = i.catalogId || null;
         const d = i.description || {};
         i.description = { p1: d.p1 || "", p2: d.p2 || "", p3: d.p3 || "" };
         if (!Array.isArray(i.specifications) || !i.specifications.length)
@@ -1445,8 +2576,6 @@
           const r = localStorage.getItem(DB) || localStorage.getItem(OLD);
           if (r) {
             const p = JSON.parse(r);
-            // ✅ FIX A — force the `type` field so old v9 records
-            // (which had no per-item type) don't produce "undefineds" views.
             S.products = (p.products || []).map((x) =>
               hyd({ ...x, type: "product" }),
             );
@@ -1470,7 +2599,6 @@
       }
       function pill(state, txt) {
         const p = $("#pill");
-        // ✅ FIX #1 — null guard, matches the reviews page.
         if (!p) return;
         let c = "",
           t;
@@ -1539,8 +2667,6 @@
         if (!obj || !obj.dataUrl || obj.up === obj.dataUrl.length) return;
         const ex = await ghGet(path).catch(() => null);
         await ghPut(path, obj.dataUrl.split(",")[1], ex && ex.sha);
-        // ✅ FIX E — cache-buster so a replaced image isn't served from
-        // GitHub's CDN with the old bytes for ~5 minutes.
         obj.url = RAW(path) + "?v=" + Date.now();
         obj.up = obj.dataUrl.length;
       }
@@ -1574,9 +2700,8 @@
           images: { main: f(i.images.main), gallery: i.images.gallery.map(f) },
           brochure: f(i.brochure),
           completion: pct(i),
-          // ✅ FIX D (part 1) — persist isSample so it survives the
-          // cloud round-trip and "Load samples" can't insert duplicates.
           isSample: !!i.isSample,
+          catalogId: i.catalogId || null,
           linkedFrom: null,
         };
       }
@@ -1596,11 +2721,12 @@
 
       async function ghSave(manual) {
         if (!cloud()) {
-          // ✅ FIX C — save locally and hint, but DO NOT yank the user
-          // out of the editor to Settings. They stay where they were.
           saveLocal();
           if (manual)
-            toast("Saved locally · add a GitHub token in Settings to sync", "ok");
+            toast(
+              "Saved locally · add a GitHub token in Settings to sync",
+              "ok",
+            );
           return;
         }
         if (saving) {
@@ -1691,8 +2817,8 @@
                 })),
               },
               brochure: r.brochure ? { ...r.brochure, dataUrl: null } : null,
-              // ✅ FIX D (part 2) — restore isSample on load.
               isSample: !!r.isSample,
+              catalogId: r.catalogId || null,
             });
           S.products = (raw.products || []).map((r) => rc(r, "product"));
           S.services = (raw.services || []).map((r) => rc(r, "service"));
@@ -1705,6 +2831,52 @@
         } catch (e) {
           toast("Load failed: " + e.message.slice(0, 60), "er");
         }
+      }
+
+      /* ============================================================
+         CATALOG → PRODUCT CONVERTER (one-by-one add)
+         ============================================================ */
+      function shortFromDesc(d) {
+        const txt = String(d || "").trim();
+        if (!txt) return "";
+        const m = txt.match(/^[^.]*\./);
+        let s = (m ? m[0] : txt).trim();
+        if (s.length > MAXS) s = s.slice(0, MAXS - 1).trim() + "…";
+        return s;
+      }
+
+      function fromCatalog(r) {
+        const it = mk("product", {
+          name: r.n,
+          category: CATMAP[r.c] || r.c,
+          badge: r.b || "",
+          shortDescription: shortFromDesc(r.d),
+          description: { p1: r.d || "", p2: "", p3: "" },
+          specifications: (r.s || []).map(([label, value]) => ({
+            label,
+            value,
+          })),
+          features: (r.f || []).map((x) => String(x).replace(/^✓\s*/, "")),
+          applications: (r.a || []).map((x) =>
+            typeof x === "string" ? x : x && x.name ? x.name : "",
+          ),
+        });
+        it.id = r.id;
+        it.catalogId = r.id;
+        it.images = {
+          main: r.i
+            ? { filename: r.id + "-main.jpg", url: r.i, up: null }
+            : null,
+          gallery: (r.g || [])
+            .filter((u) => u && !/placeholder\.com/i.test(u))
+            .map((u, n) => ({
+              gid: uid(),
+              filename: r.id + "-gallery-" + (n + 1) + ".jpg",
+              url: u,
+              up: null,
+            })),
+        };
+        return it;
       }
 
       /* ---------- VIEWS ---------- */
@@ -1725,7 +2897,7 @@
         scrollTo(0, 0);
       }
       function render() {
-        if (!isAuthed()) return; // safety: never render app content pre-login
+        if (!isAuthed()) return;
         $("#cp").textContent = S.products.length;
         $("#cs").textContent = S.services.length;
         document
@@ -1755,15 +2927,51 @@
           p = pct(i);
         return `<div class="card it" data-open="${i.id}"><div class="th">${
           s
-            ? `<img src="${esc(s)}" loading="lazy">`
+            ? `<img src="${esc(s)}" loading="lazy" alt="">`
             : i.type === "service"
               ? "⚙️"
               : "📦"
         }${i.badge ? `<span class="bd">${esc(i.badge)}</span>` : ""}</div>
  <div class="ib"><h3>${esc(i.name || "Untitled " + i.type)}</h3><p>${esc(i.category || "No category")}${i.priceDisplay ? " · " + esc(i.priceDisplay) : ""}</p><div class="pb"><i style="width:${p}%"></i></div><div class="pm"><span>Completion</span><span>${p}%</span></div></div></div>`;
       }
+      function catCard(r, addedIds) {
+        const added = addedIds.has(r.id);
+        const img = r.i && !/placeholder\.com/i.test(r.i) ? r.i : "";
+        const specs = (r.s || []).length;
+        return `<div class="card cat-it">
+ <div class="cat-th">
+ ${img ? `<img src="${esc(img)}" loading="lazy" alt="">` : `<span class="cat-ph">🏭</span>`}
+ ${r.b ? `<span class="bd">${esc(r.b)}</span>` : ""}
+ </div>
+ <div class="cat-ib">
+ <h4>${esc(r.n)}</h4>
+ <p class="cat-meta">${esc(CATMAP[r.c] || r.c)}${specs ? ` · ${specs} spec${specs === 1 ? "" : "s"}` : ""}</p>
+ ${
+   added
+     ? `<button class="btn cat-btn added" disabled type="button">✓ Already added</button>`
+     : `<button class="btn pri cat-btn" data-catadd="${r.id}" type="button">＋ Add &amp; edit</button>`
+ }
+ </div></div>`;
+      }
       function dash(a, g) {
         const low = a.filter((i) => pct(i) < 80);
+        const s = q.trim().toLowerCase();
+        const addedIds = new Set(
+          S.products.map((p) => p.catalogId).filter(Boolean),
+        );
+        const catList = s
+          ? CATALOG.filter(
+              (r) =>
+                r.n.toLowerCase().includes(s) ||
+                (CATMAP[r.c] || r.c).toLowerCase().includes(s) ||
+                (r.d || "").toLowerCase().includes(s),
+            )
+          : CATALOG;
+        const addedCount = CATALOG.filter((r) => addedIds.has(r.id)).length;
+        const catHtml = catList.length
+          ? catList.map((r) => catCard(r, addedIds)).join("")
+          : `<div class="empty" style="grid-column:1/-1;padding:44px 20px"><div>🔍</div><h3>No machines match "${esc(q)}"</h3></div>`;
+
         return `<div class="stats">
  <div class="card stat" style="--c:var(--o)"><small>Products</small><h2>${S.products.length}</h2></div>
  <div class="card stat" style="--c:var(--b)"><small>Services</small><h2>${S.services.length}</h2></div>
@@ -1774,16 +2982,25 @@
      ? ""
      : '<div class="alert">⚠️ GitHub is not connected — changes are saved in this browser only. Open <b>GitHub &amp; Brand</b> to add your token.</div>'
  }
- <div class="row" style="margin-bottom:18px"><button class="btn pri" data-new="product">＋ New Product</button><button class="btn dk" data-new="service">＋ New Service</button>
- <button class="btn" data-act="load">⬇ Load from GitHub</button><button class="btn" data-act="dl">⬇ Download JSON</button><button class="btn" data-act="copy">📋 Copy JSON</button>
- <button class="btn" data-act="samples">📌 Load samples</button></div>
+ <div class="row" style="margin-bottom:8px">
+ <button class="btn pri" data-new="product" type="button">＋ New Product</button>
+ <button class="btn dk" data-new="service" type="button">＋ New Service</button>
+ <button class="btn" data-act="load" type="button">⬇ Load from GitHub</button>
+ <button class="btn" data-act="dl" type="button">⬇ Download JSON</button>
+ <button class="btn" data-act="copy" type="button">📋 Copy JSON</button>
+ <button class="btn" data-act="samples" type="button">📌 Load demo samples</button>
+ </div>
  ${
    low.length
-     ? `<h3 class="mont" style="margin-bottom:12px">Finish these next</h3><div class="grid">${low.slice(0, 6).map(card).join("")}</div>`
-     : a.length
-       ? ""
-       : '<div class="empty"><div>🚀</div><h3>Nothing here yet</h3><p>Add your first product or load the samples.</p></div>'
- }`;
+     ? `<h3 class="mont" style="margin:22px 0 12px">Finish these next</h3><div class="grid">${low.slice(0, 6).map(card).join("")}</div>`
+     : ""
+ }
+ <div class="cat-head">
+ <h3>🏭 Machine catalog <span style="color:var(--mu);font-weight:600;font-size:12px">(${CATALOG.length} machines)</span></h3>
+ <span class="cat-count">${addedCount} / ${CATALOG.length} added</span>
+ </div>
+ <p class="cat-hint">Click <b>＋ Add &amp; edit</b> on any machine to load it individually into Products and open its editor. Fill in / correct the fields, hit <b>Save</b>, then come back and add the next one. Already-added machines show <b>✓ Already added</b>.</p>
+ <div class="grid">${catHtml}</div>`;
       }
       function list(v) {
         const t = v === "products" ? "product" : "service";
@@ -1797,11 +3014,11 @@
             (i.priceDisplay || "").toLowerCase().includes(s)
           );
         });
-        return `<div class="row" style="justify-content:space-between;margin-bottom:18px"><p style="color:var(--mu)">${t === "product" ? "Machines and equipment you manufacture" : "Installation, maintenance, training & custom work"}</p><button class="btn pri" data-new="${t}">＋ Add ${t === "product" ? "Product" : "Service"}</button></div>
+        return `<div class="row" style="justify-content:space-between;margin-bottom:18px"><p style="color:var(--mu)">${t === "product" ? "Machines and equipment you manufacture" : "Installation, maintenance, training & custom work"}</p><button class="btn pri" data-new="${t}" type="button">＋ Add ${t === "product" ? "Product" : "Service"}</button></div>
  ${
    L.length
      ? `<div class="grid">${L.map(card).join("")}</div>`
-     : `<div class="empty"><div>${t === "product" ? "📦" : "⚙️"}</div><h3>No ${v} found</h3></div>`
+     : `<div class="empty"><div>${t === "product" ? "📦" : "⚙️"}</div><h3>No ${v} found</h3><p>Go to Dashboard to add machines from the catalog.</p></div>`
  }`;
       }
       function lines(i, key, ph, two) {
@@ -1813,9 +3030,9 @@
                   two
                     ? `<input data-l="${key}" data-k="label" data-i="${n}" value="${esc(x.label)}" placeholder="Label"><input data-l="${key}" data-k="value" data-i="${n}" value="${esc(x.value)}" placeholder="Value">`
                     : `<input data-l="${key}" data-i="${n}" value="${esc(x)}" placeholder="${ph}">`
-                }<button data-del="${key}" data-i="${n}">✕</button></div>`,
+                }<button data-del="${key}" data-i="${n}" type="button">✕</button></div>`,
             )
-            .join("") + `<button class="add" data-add="${key}">＋ Add</button>`
+            .join("") + `<button class="add" data-add="${key}" type="button">＋ Add</button>`
         );
       }
       function editor(i) {
@@ -1824,9 +3041,8 @@
           ms = src(i.images.main);
         const F = (k, l, ph, ex) =>
           `<div class="fg"><label>${l}</label><input data-f="${k}" value="${esc(i[k])}" placeholder="${ph}" ${ex || ""}></div>`;
-        // ✅ FIX #3 — removed dead data-up-zone attributes.
-        return `<div class="card edtop"><button class="btn" data-act="back">← Back</button><h2>${esc(i.name || "Untitled")}</h2>
- <button class="btn" data-act="dup">⧉ Duplicate</button><button class="btn dn" data-act="del">🗑 Delete</button><button class="btn pri" data-act="save">💾 Save</button></div>
+        return `<div class="card edtop"><button class="btn" data-act="back" type="button">← Back</button><h2>${esc(i.name || "Untitled")}</h2>
+ <button class="btn" data-act="dup" type="button">⧉ Duplicate</button><button class="btn dn" data-act="del" type="button">🗑 Delete</button><button class="btn pri" data-act="save" type="button">💾 Save</button></div>
  <div class="card sec"><h3><span>1</span>Basic info</h3>${F(
    "name",
    (sv ? "Service" : "Product") + " name *",
@@ -1864,23 +3080,24 @@
  <div class="card sec"><h3><span>6</span>Photos</h3>
  <div class="fg"><label>Main photo</label><div class="up">📷 Tap, drop or paste a main photo<input type="file" accept="image/*" data-up="main"></div>${
    ms
-     ? `<div class="tg"><div class="tb"><img src="${esc(ms)}"><button data-act="rmMain">✕</button></div></div>`
+     ? `<div class="tg"><div class="tb"><img src="${esc(ms)}" alt=""><button data-act="rmMain" type="button">✕</button></div></div>`
      : ""
  }</div>
  <div class="fg"><label>Gallery (${i.images.gallery.length}/${MAXG})</label><div class="up">🖼️ Drop or tap to add gallery photos<input type="file" accept="image/*" multiple data-up="gallery"></div>
  <div class="tg">${i.images.gallery
    .map(
      (g, n) =>
-       `<div class="tb"><img src="${esc(src(g))}"><button data-rg="${n}">✕</button></div>`,
+       `<div class="tb"><img src="${esc(src(g))}" alt=""><button data-rg="${n}" type="button">✕</button></div>`,
    )
    .join("")}</div></div></div>
  <div class="card sec"><h3><span>7</span>Brochure PDF</h3><div class="up">📄 ${
    i.brochure
-     ? esc(i.brochure.filename || "brochure.pdf") + " attached — drop or tap to replace"
+     ? esc(i.brochure.filename || "brochure.pdf") +
+       " attached — drop or tap to replace"
      : "Drop or tap to attach a PDF (optional)"
  }<input type="file" accept="application/pdf" data-up="brochure"></div>${
    i.brochure
-     ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro">Remove</button>'
+     ? '<button class="btn dn" style="margin-top:10px" data-act="rmBro" type="button">Remove</button>'
      : ""
  }</div>`;
       }
@@ -1890,7 +3107,7 @@
  <div class="g2"><div class="fg"><label>Owner</label><input id="c_owner" value="${esc(cfg.owner)}"></div><div class="fg"><label>Repository</label><input id="c_repo" value="${esc(cfg.repo)}"></div>
  <div class="fg"><label>Branch</label><input id="c_branch" value="${esc(cfg.branch)}"></div><div class="fg"><label>Data file</label><input id="c_dataPath" value="${esc(cfg.dataPath)}"></div></div>
  <div class="fg"><label>Personal access token</label><input id="c_token" type="password" value="${esc(cfg.token)}" placeholder="github_pat_…"></div>
- <div class="row"><button class="btn pri" data-act="cfg">Save settings</button><button class="btn" data-act="test">Test connection</button></div></div>
+ <div class="row"><button class="btn pri" data-act="cfg" type="button">Save settings</button><button class="btn" data-act="test" type="button">Test connection</button></div></div>
  <div class="card sec"><h3><span>🎨</span>Brand palette (from your logo)</h3><div class="pal">${PAL.map(
    ([n, c]) => `<span style="background:${c}">${n}<br>${c}</span>`,
  ).join("")}</div>
@@ -1942,6 +3159,28 @@
           return;
         }
         if (c("#saveNow")) return ghSave(true);
+
+        /* -------- CATALOG ONE-BY-ONE ADD -------- */
+        if (c("[data-catadd]")) {
+          const id = c("[data-catadd]").dataset.catadd;
+          const r = CATALOG.find((x) => x.id === id);
+          if (!r) return;
+          if (S.products.some((p) => p.catalogId === id)) {
+            toast("Already added");
+            return;
+          }
+          const it = fromCatalog(r);
+          S.products.push(it);
+          view = "products";
+          activeId = it.id;
+          touch();
+          render();
+          scrollTo(0, 0);
+          setTimeout(() => $("[data-f=name]")?.focus(), 100);
+          toast("Added — edit and save", "ok");
+          return;
+        }
+
         if (c("[data-new]")) {
           const ty = c("[data-new]").dataset.new,
             it = mk(ty);
@@ -2014,11 +3253,9 @@
           render();
           toast("Deleted");
         } else if (a === "dup" && i) {
-          // ✅ FIX #4 — clear `up`/`url` on image copies so the duplicate
-          // re-uploads its own files instead of sharing the original's
-          // GitHub paths.
           const n = JSON.parse(JSON.stringify(i));
           n.id = uid();
+          n.catalogId = null;
           n.name += " (copy)";
           n.isSample = false;
           const strip = (img) => (img ? { ...img, up: null, url: null } : img);
@@ -2065,8 +3302,6 @@
             ["product", S.products],
             ["service", S.services],
           ].forEach(([ty, L]) => {
-            // ✅ FIX D (part 3) — with isSample now persisted, this guard
-            // works correctly after a GitHub round-trip.
             if (!L.some((x) => x.isSample))
               L.unshift(mk(ty, { ...SAMPLES[ty], isSample: true }));
           });
@@ -2105,8 +3340,12 @@
         const t = e.target;
         if (t.id === "q") {
           q = t.value;
-          if (!activeId && (view === "products" || view === "services"))
+          if (activeId) return;
+          if (view === "products" || view === "services") {
             $("#pg").innerHTML = list(view);
+          } else if (view === "dash") {
+            render();
+          }
           return;
         }
         const i = cur();
@@ -2137,17 +3376,13 @@
         const i = cur();
         if (!up || !i) return;
         await handleUpload(up, [...e.target.files], i);
-        e.target.value = ""; // allow re-selecting the same file
+        e.target.value = "";
       });
 
-      /* ---------- ✅ FIX B — drag & drop safety ----------
-         preventDefault is now ALWAYS called on dragover/drop, even when
-         the pointer is outside a .up zone. Previously, missing the zone
-         by 20px caused the browser to navigate to the dropped file and
-         lose unsaved work. */
+      /* ---------- DRAG & DROP (safe on mobile too) ---------- */
       ["dragenter", "dragover"].forEach((ev) =>
         document.addEventListener(ev, (e) => {
-          e.preventDefault(); // always block the browser default
+          e.preventDefault();
           const up = e.target.closest?.(".up");
           if (!up) return;
           e.dataTransfer.dropEffect = "copy";
@@ -2158,15 +3393,14 @@
         document.addEventListener(ev, (e) => {
           const up = e.target.closest?.(".up");
           if (!up) return;
-          // Ignore leave events when moving into a child element
           if (e.relatedTarget && up.contains(e.relatedTarget)) return;
           up.classList.remove("dr");
         }),
       );
       document.addEventListener("drop", async (e) => {
-        e.preventDefault(); // always block navigation-to-file
+        e.preventDefault();
         const up = e.target.closest?.(".up");
-        if (!up) return; // drop landed outside a zone — swallow it
+        if (!up) return;
         up.classList.remove("dr");
         const input = up.querySelector("input[type=file]");
         const kind = input?.dataset.up;
@@ -2230,8 +3464,6 @@
 
       /* ---------- BOOT APP DATA ---------- */
       loadLocal();
-      // render() is only meaningful (and safe) once logged in —
-      // the login handler and bootAuth call it when appropriate.
       if (isAuthed()) render();
     </script>
   </body>
