@@ -4,8 +4,8 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:49:45.343Z",
-    "totalProducts": 2,
+    "generatedAt": "2026-10-14T11:50:09.022Z",
+    "totalProducts": 3,
     "totalServices": 0
   },
   "products": [
@@ -171,6 +171,90 @@
       "completion": 75,
       "isSample": false,
       "catalogId": "cnc-1",
+      "linkedFrom": null
+    },
+    {
+      "id": "cnc-2",
+      "slug": "cnc-strip-cutting-machine",
+      "type": "product",
+      "name": "CNC Strip Cutting Machine",
+      "category": "CNC Machines",
+      "badge": null,
+      "priceDisplay": null,
+      "shortDescription": "A CNC strip cutting machine is an automated heavy-duty industrial fabrication system engineered to slice large raw steel plates into multiple uniform, straight, long parallel stri…",
+      "description": {
+        "paragraph1": "A CNC strip cutting machine is an automated heavy-duty industrial fabrication system engineered to slice large raw steel plates into multiple uniform, straight, long parallel strips simultaneously...",
+        "paragraph2": "",
+        "paragraph3": ""
+      },
+      "specifications": [
+        {
+          "label": "Cutting Process",
+          "value": "Laser"
+        },
+        {
+          "label": "Cutting Area",
+          "value": "1300×2500 mm"
+        },
+        {
+          "label": "Supported Material",
+          "value": "Mild Steel, Aluminium, Stainless Steel"
+        },
+        {
+          "label": "Max Cutting Thickness",
+          "value": "10 mm"
+        },
+        {
+          "label": "Automation Level",
+          "value": "Semi Automatic"
+        },
+        {
+          "label": "CNC Controller",
+          "value": "Hypertherm"
+        },
+        {
+          "label": "Drive Type",
+          "value": "Gantry"
+        },
+        {
+          "label": "Application",
+          "value": "Sheet Cutting"
+        }
+      ],
+      "keyFeatures": [],
+      "applications": [],
+      "images": {
+        "main": {
+          "filename": "cnc-2-main.jpg",
+          "url": "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609047/BP/EM/LJ/106518927/image-500x500.jpeg"
+        },
+        "gallery": [
+          {
+            "filename": "cnc-2-gallery-1.jpg",
+            "url": "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609047/BP/EM/LJ/106518927/image-500x500.jpeg",
+            "gid": "id_mv81sk4ziikd"
+          },
+          {
+            "filename": "cnc-2-gallery-2.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/609979706/IQ/RA/NC/106518927/cnc-strip-cutting-machine-500x500.jpg",
+            "gid": "id_mv81sk4zyo32"
+          },
+          {
+            "filename": "cnc-2-gallery-3.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/609979711/UU/OZ/NA/106518927/cnc-strip-cutting-machine-500x500.jpg",
+            "gid": "id_mv81sk4zy3jl"
+          },
+          {
+            "filename": "cnc-2-gallery-4.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/609979713/IW/YO/IH/106518927/cnc-strip-cutting-machine-500x500.jpg",
+            "gid": "id_mv81sk4ztqm4"
+          }
+        ]
+      },
+      "brochure": null,
+      "completion": 75,
+      "isSample": false,
+      "catalogId": "cnc-2",
       "linkedFrom": null
     }
   ],
