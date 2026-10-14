@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:47:16.356Z",
+    "generatedAt": "2026-10-14T11:47:23.619Z",
     "totalProducts": 2,
     "totalServices": 0
   },
@@ -123,7 +123,7 @@
         },
         {
           "label": "Cutting Thickness(Plasma)",
-          "value": "Dependence upon plasma power source selection"
+          "value": "Depend upon plasma power source selection"
         },
         {
           "label": "Automation Level",
