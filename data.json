@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:48:08.524Z",
+    "generatedAt": "2026-10-14T11:48:23.212Z",
     "totalProducts": 2,
     "totalServices": 0
   },
@@ -143,7 +143,7 @@
         },
         {
           "label": "Cutting Thickness(Flame)",
-          "value": "minimum"
+          "value": "minimum - 6mm to 100mm"
         }
       ],
       "keyFeatures": [],
