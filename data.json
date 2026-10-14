@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "company": "PAP WELD CORE AUTOMATION PRIVATE LIMITED",
+    "cin": "U25910TN2025PTC180645",
+    "gstin": "33AAPCP7917D1Z9",
+    "website": "papweld.com",
+    "generatedAt": "2026-10-14T11:04:07.458Z",
+    "totalProducts": 1,
+    "totalServices": 0
+  },
+  "products": [
+    {
+      "id": "h-beam-1",
+      "slug": "beam-line-welding-machine-pull-thru-welding-machine",
+      "type": "product",
+      "name": "BEAM LINE WELDING MACHINE / PULL THRU WELDING MACHINE",
+      "category": "H-Beam Welding",
+      "badge": "Best Seller",
+      "priceDisplay": null,
+      "shortDescription": "Automated pull-through welding solution for PEB and structural steel beam fabrication, designed for consistent weld quality, improved productivity and reduced manual handling.",
+      "description": {
+        "paragraph1": "The Beam Line Welding Machine, also known as a Pull-Through Welding Machine, is an industrial welding solution designed for structural steel fabrication and Pre-Engineered Building (PEB) manufacturing.\n\nThe system is intended to support continuous beam welding operations by moving structural components through a designated welding station. Depending on the machine configuration, it can be engineered to improve welding consistency, reduce repetitive manual operations and streamline production workflows.\n\nPAP Weld Core Automation provides industrial welding automation solutions tailored to customer-specific beam dimensions, production requirements and fabrication processes.",
+        "paragraph2": "The structural components are positioned and aligned according to the required fabrication procedure. The beam assembly is then guided through the machine's welding zone using the configured feeding and handling mechanism.\n\nThe welding system performs the specified welding operation as the component moves through the process. Depending on the selected configuration, the machine can incorporate welding torches, component guides, clamping arrangements, drive mechanisms and process controls.\n\nThe finished beam proceeds to inspection and subsequent fabrication stages in accordance with the customer's welding procedure and quality requirements.\n\nThe exact operating sequence and automation features depend on the supplied machine configuration.",
+        "paragraph3": ""
+      },
+      "specifications": [
+        {
+          "label": "Automation Grade",
+          "value": "Semi - Automatic"
+        },
+        {
+          "label": "Welding Process",
+          "value": "SAW (Submerged Arc)"
+        },
+        {
+          "label": "Flange Height",
+          "value": "600 mm/800 mm"
+        },
+        {
+          "label": "Beam Length",
+          "value": "12 m"
+        },
+        {
+          "label": "Flange Thickness",
+          "value": "5-25 mm"
+        },
+        {
+          "label": "Web Thickness",
+          "value": "4–16 mm"
+        }
+      ],
+      "keyFeatures": [
+        "Continuous pull-through welding for high productivity",
+        "Deep penetration SAW process for structural integrity",
+        "Programmable settings for varying beam sizes",
+        "Minimal post-weld cleanup required",
+        "12-month parts warranty with Chennai-based support"
+      ],
+      "applications": [
+        "Structural Steel",
+        "Heavy Fabrication",
+        "Shipbuilding",
+        "PEB",
+        "Infrastructure",
+        "Mining & Earthmoving"
+      ],
+      "images": {
+        "main": {
+          "filename": "h-beam-1-main.jpg",
+          "url": "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg"
+        },
+        "gallery": [
+          {
+            "filename": "h-beam-1-gallery-1.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "gid": "id_mv7za34hz7hx"
+          },
+          {
+            "filename": "h-beam-1-gallery-2.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611753209/ML/RU/GF/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "gid": "id_mv7za34hi860"
+          },
+          {
+            "filename": "h-beam-1-gallery-3.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611753213/SR/CW/OV/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
+            "gid": "id_mv7za34hlnic"
+          }
+        ]
+      },
+      "brochure": null,
+      "completion": 100,
+      "isSample": false,
+      "catalogId": "h-beam-1",
+      "linkedFrom": null
+    }
+  ],
+  "services": []
+}
