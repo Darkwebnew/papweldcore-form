@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:04:07.458Z",
+    "generatedAt": "2026-10-14T11:10:45.819Z",
     "totalProducts": 1,
     "totalServices": 0
   },
@@ -66,8 +66,9 @@
       ],
       "images": {
         "main": {
-          "filename": "h-beam-1-main.jpg",
-          "url": "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg"
+          "filename": "ChatGPT Image Aug 28, 2026, 01_34_27 PM.jpg",
+          "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/h-beam-1-main.jpg?v=1791976245818",
+          "gid": "id_mv80dvldcjpe"
         },
         "gallery": [
           {
