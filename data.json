@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:50:09.022Z",
+    "generatedAt": "2026-10-14T11:50:16.739Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -179,7 +179,7 @@
       "type": "product",
       "name": "CNC Strip Cutting Machine",
       "category": "CNC Machines",
-      "badge": null,
+      "badge": "Custom Build",
       "priceDisplay": null,
       "shortDescription": "A CNC strip cutting machine is an automated heavy-duty industrial fabrication system engineered to slice large raw steel plates into multiple uniform, straight, long parallel stri…",
       "description": {
