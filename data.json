@@ -4,8 +4,8 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:10:45.819Z",
-    "totalProducts": 1,
+    "generatedAt": "2026-10-14T11:15:43.204Z",
+    "totalProducts": 2,
     "totalServices": 0
   },
   "products": [
@@ -92,6 +92,85 @@
       "completion": 100,
       "isSample": false,
       "catalogId": "h-beam-1",
+      "linkedFrom": null
+    },
+    {
+      "id": "cnc-1",
+      "slug": "cnc-flame-cutting-machine",
+      "type": "product",
+      "name": "CNC Flame Cutting Machine",
+      "category": "CNC Machines",
+      "badge": "Precision",
+      "priceDisplay": null,
+      "shortDescription": "A CNC flame cutting machine (also known as an oxy-fuel CNC cutter) is an automated industrial system that uses a combination of fuel gas and pure oxygen to slice through thick car…",
+      "description": {
+        "paragraph1": "A CNC flame cutting machine (also known as an oxy-fuel CNC cutter) is an automated industrial system that uses a combination of fuel gas and pure oxygen to slice through thick carbon steel...",
+        "paragraph2": "",
+        "paragraph3": ""
+      },
+      "specifications": [
+        {
+          "label": "Cutting Process",
+          "value": "Plasma"
+        },
+        {
+          "label": "Cutting Area",
+          "value": "1300×2500 mm"
+        },
+        {
+          "label": "Supported Material",
+          "value": "Mild Steel, Stainless Steel, Aluminium"
+        },
+        {
+          "label": "Max Cutting Thickness",
+          "value": "6 mm"
+        },
+        {
+          "label": "Automation Level",
+          "value": "Semi Automatic"
+        },
+        {
+          "label": "CNC Controller",
+          "value": "Hypertherm"
+        },
+        {
+          "label": "Drive Type",
+          "value": "Gantry"
+        },
+        {
+          "label": "Application",
+          "value": "Profile Cutting, Sheet Cutting"
+        }
+      ],
+      "keyFeatures": [],
+      "applications": [],
+      "images": {
+        "main": {
+          "filename": "cnc-1-main.jpg",
+          "url": "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609021/KS/JD/GH/106518927/image-500x500.jpeg"
+        },
+        "gallery": [
+          {
+            "filename": "cnc-1-gallery-1.jpg",
+            "url": "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609021/KS/JD/GH/106518927/image-500x500.jpeg",
+            "gid": "id_mv80ka54z8ev"
+          },
+          {
+            "filename": "cnc-1-gallery-2.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611756734/YV/XI/UU/106518927/cnc-flame-cutting-machine-500x500.jpg",
+            "gid": "id_mv80ka54rzl5"
+          },
+          {
+            "filename": "cnc-1-gallery-3.jpg",
+            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611756738/KS/CA/OS/106518927/cnc-flame-cutting-machine-500x500.jpg",
+            "gid": "id_mv80ka54qowc"
+          }
+        ]
+      },
+      "brochure": null,
+      "completion": 75,
+      "isSample": false,
+      "catalogId": "cnc-1",
       "linkedFrom": null
     }
   ],
