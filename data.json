@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-14T11:15:43.204Z",
+    "generatedAt": "2026-10-14T11:21:43.283Z",
     "totalProducts": 2,
     "totalServices": 0
   },
@@ -96,9 +96,9 @@
     },
     {
       "id": "cnc-1",
-      "slug": "cnc-flame-cutting-machine",
+      "slug": "cnc-flame-plasma-cutting-machine",
       "type": "product",
-      "name": "CNC Flame Cutting Machine",
+      "name": "CNC Flame / Plasma Cutting Machine",
       "category": "CNC Machines",
       "badge": "Precision",
       "priceDisplay": null,
