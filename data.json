@@ -4,16 +4,16 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:51:23.243Z",
+    "generatedAt": "2026-10-15T08:54:25.122Z",
     "totalProducts": 3,
     "totalServices": 0
   },
   "products": [
     {
       "id": "h-beam-1",
-      "slug": "beam-line-welding-machine-pull-thru-welding-machine",
+      "slug": "beam-line-welding-machine-pull-through-welding-machine",
       "type": "product",
-      "name": "BEAM LINE WELDING MACHINE / PULL THRU WELDING MACHINE",
+      "name": "Beam Line Welding Machine / Pull-Through Welding Machine",
       "category": "H-Beam Welding",
       "badge": "Best Seller",
       "priceDisplay": "Contact for Quote",
