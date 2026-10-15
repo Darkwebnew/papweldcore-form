@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:44:09.749Z",
+    "generatedAt": "2026-10-15T07:48:19.266Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -156,19 +156,19 @@
         },
         {
           "label": "Supported Material",
-          "value": "Mild Steel, Stainless Steel, Aluminium"
+          "value": "Mild Steel, stainless steel and aluminium where supported by the selected plasma configuration"
         },
         {
-          "label": "Cutting Thickness(Plasma)",
+          "label": "Plasma Cutting Thickness",
           "value": "Up to 32 mm, dependent on the selected plasma power source and material"
         },
         {
           "label": "Automation Level",
-          "value": "Semi Automatic"
+          "value": "Semi-Automatic"
         },
         {
           "label": "CNC Controller",
-          "value": "Hypertherm"
+          "value": "Hypertherm — confirm the exact controller model and configuration"
         },
         {
           "label": "Drive Type",
@@ -176,14 +176,23 @@
         },
         {
           "label": "Application",
-          "value": "Profile Cutting, Sheet Cutting"
+          "value": "Profile Cutting and Sheet Cutting"
         },
         {
-          "label": "Cutting Thickness(Flame)",
-          "value": "minimum - 6mm to 100mm"
+          "label": "Flame Cutting Thickness",
+          "value": "6–100 mm, subject to material, gas configuration and operating conditions"
         }
       ],
-      "keyFeatures": [],
+      "keyFeatures": [
+        "CNC-controlled gantry movement for programmed cutting operations.",
+        "Flame cutting capability for suitable carbon steel plate applications.",
+        "Plasma cutting capability according to the selected power source.",
+        "Large-format cutting area for industrial plate processing.",
+        "Digital profile cutting based on compatible CAD/CAM programs.",
+        "Application-specific cutting parameters for different material and thickness requirements.",
+        "Supports production of profiles and components for structural fabrication.",
+        "Configuration options subject to machine design and the agreed scope of supply."
+      ],
       "applications": [],
       "images": {
         "main": {
@@ -205,7 +214,7 @@
         ]
       },
       "brochure": null,
-      "completion": 75,
+      "completion": 88,
       "isSample": false,
       "catalogId": "cnc-1",
       "linkedFrom": null
