@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T06:29:14.535Z",
+    "generatedAt": "2026-10-15T07:34:56.800Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -67,15 +67,11 @@
         "Steel Truss and Structural Assembly Manufacturing"
       ],
       "images": {
-        "main": {
-          "filename": "ChatGPT Image Aug 28, 2026, 01_34_27 PM.jpg",
-          "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/h-beam-1-main.jpg?v=1791976245818",
-          "gid": "id_mv80dvldcjpe"
-        },
+        "main": null,
         "gallery": []
       },
       "brochure": null,
-      "completion": 100,
+      "completion": 88,
       "isSample": false,
       "catalogId": "h-beam-1",
       "linkedFrom": null
