@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:50:07.544Z",
+    "generatedAt": "2026-10-15T08:50:14.657Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -294,7 +294,9 @@
         "Suitable for integration into structural steel and heavy fabrication workflows.",
         "Configuration, installation, commissioning and training subject to the agreed scope of supply."
       ],
-      "applications": [],
+      "applications": [
+        "Structural Steel Fabrication"
+      ],
       "images": {
         "main": {
           "filename": "WhatsApp Image 2026-10-14 at 4.39.10 PM.jpg",
@@ -315,7 +317,7 @@
         ]
       },
       "brochure": null,
-      "completion": 88,
+      "completion": 100,
       "isSample": false,
       "catalogId": "cnc-2",
       "linkedFrom": null
