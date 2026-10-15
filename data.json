@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:49:23.078Z",
+    "generatedAt": "2026-10-15T07:49:32.673Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -201,7 +201,8 @@
         "Industrial Machinery Manufacturing",
         "Pressure Vessel and Equipment Fabrication, where the machine configuration and applicable procedures are suitable",
         "Shipbuilding and Marine Fabrication, subject to material and application requirements",
-        "Mining and Earthmoving Equipment Manufacturing"
+        "Mining and Earthmoving Equipment Manufacturing",
+        "Sheet Metal and Plate Processing"
       ],
       "images": {
         "main": {
