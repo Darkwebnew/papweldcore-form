@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:48:27.513Z",
+    "generatedAt": "2026-10-15T08:48:35.878Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -272,7 +272,7 @@
         },
         {
           "label": "Automation Level",
-          "value": "Semi Automatic"
+          "value": "Semi-Automatic"
         },
         {
           "label": "Drive Type",
