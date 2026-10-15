@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T06:28:57.009Z",
+    "generatedAt": "2026-10-15T06:29:14.535Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -72,23 +72,7 @@
           "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/h-beam-1-main.jpg?v=1791976245818",
           "gid": "id_mv80dvldcjpe"
         },
-        "gallery": [
-          {
-            "filename": "h-beam-1-gallery-1.jpg",
-            "url": "https://5.imimg.com/data5/SELLER/Default/2026/2/585704480/VQ/DI/VJ/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
-            "gid": "id_mv7za34hz7hx"
-          },
-          {
-            "filename": "h-beam-1-gallery-2.jpg",
-            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611753209/ML/RU/GF/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
-            "gid": "id_mv7za34hi860"
-          },
-          {
-            "filename": "h-beam-1-gallery-3.jpg",
-            "url": "https://5.imimg.com/data5/SELLER/Default/2026/5/611753213/SR/CW/OV/106518927/ptw-pull-thru-welding-machine-500x500.jpg",
-            "gid": "id_mv7za34hlnic"
-          }
-        ]
+        "gallery": []
       },
       "brochure": null,
       "completion": 100,
