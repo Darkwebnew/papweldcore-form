@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:48:19.266Z",
+    "generatedAt": "2026-10-15T07:48:32.614Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -193,7 +193,9 @@
         "Supports production of profiles and components for structural fabrication.",
         "Configuration options subject to machine design and the agreed scope of supply."
       ],
-      "applications": [],
+      "applications": [
+        "Structural Steel Fabrication"
+      ],
       "images": {
         "main": {
           "filename": "WhatsApp Image 2026-10-14 at 4.39.12 PM.jpg",
@@ -202,11 +204,6 @@
         },
         "gallery": [
           {
-            "filename": "cnc-1-gallery-1.jpg",
-            "url": "https://5.imimg.com/data5/WA_9696/Default/2026/3/592609021/KS/JD/GH/106518927/image-500x500.jpeg",
-            "gid": "id_mv80ka54z8ev"
-          },
-          {
             "filename": "WhatsApp Image 2026-10-14 at 4.39.11 PM.jpg",
             "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv81rxjjyn7n.jpg?v=1791978585343",
             "gid": "id_mv81rxjjyn7n"
@@ -214,7 +211,7 @@
         ]
       },
       "brochure": null,
-      "completion": 88,
+      "completion": 100,
       "isSample": false,
       "catalogId": "cnc-1",
       "linkedFrom": null
