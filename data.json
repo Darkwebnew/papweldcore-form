@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:46:45.971Z",
+    "generatedAt": "2026-10-15T08:47:01.183Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -250,7 +250,7 @@
       "shortDescription": "Industrial CNC flame strip cutting for steel plate processing, designed to produce consistent parallel strips and streamline structural fabrication workflows.",
       "description": {
         "paragraph1": "A CNC Strip Cutting Machine is an industrial plate-processing system designed to cut large steel plates into straight, uniform strips according to specified dimensions and production requirements.\nThe PAP Weld Core CNC Strip Cutting Machine combines computer-controlled gantry movement with a configured flame-cutting system to support organized, repeatable strip-cutting operations in structural steel fabrication and heavy engineering environments.\nBy following programmed cutting paths, the machine helps streamline plate processing, reduce repetitive manual marking and support consistent strip dimensions when operated with appropriate cutting parameters, material positioning and machine calibration.\nThe machine can be configured around the customer's plate dimensions, required strip widths, material thickness, production volume and handling arrangements, subject to engineering feasibility and the agreed scope of supply.\nWith a stated cutting area of 3.3 × 12 metres and a listed maximum cutting thickness of 40 mm, the system is intended for large-format plate processing. These specifications must be confirmed against the approved technical datasheet before purchase or publication.",
-        "paragraph2": "",
+        "paragraph2": "1. Cutting Plan Preparation\nThe required strip widths and plate dimensions are defined from fabrication drawings or production requirements. A compatible CNC program is prepared using the supported programming workflow.\n2. Plate Loading and Positioning\nThe steel plate is loaded onto the cutting table and positioned within the usable cutting area. Suitable support and alignment arrangements are used to establish the required cutting references.\n3. CNC Program Setup\nThe operator verifies the cutting path, strip dimensions, torch settings and process parameters according to the material thickness and approved cutting procedure.\n4. Controlled Flame Cutting\nThe gantry guides the configured cutting torch along the programmed paths. The machine cuts the plate into the required strips using suitable fuel gas, oxygen and cutting parameters.\n5. Strip Removal and Quality Inspection\nThe cut strips are removed using appropriate material-handling equipment and inspected for dimensions, straightness and edge quality against the production requirements.\n6. Downstream Fabrication\nThe processed strips are transferred to subsequent operations such as welding, beam fabrication, structural assembly or other suitable manufacturing processes.\nThe number of cutting torches, simultaneous cutting capability, automation functions and handling arrangements depend on the actual machine configuration.",
         "paragraph3": ""
       },
       "specifications": [
