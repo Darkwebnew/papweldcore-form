@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:49:32.673Z",
+    "generatedAt": "2026-10-15T07:50:13.874Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -213,8 +213,23 @@
         "gallery": [
           {
             "filename": "WhatsApp Image 2026-10-14 at 4.39.11 PM.jpg",
-            "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv81rxjjyn7n.jpg?v=1791978585343",
-            "gid": "id_mv81rxjjyn7n"
+            "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv98nl15y7tw.jpg?v=1792050604940",
+            "gid": "id_mv98nl15y7tw"
+          },
+          {
+            "filename": "WhatsApp Image 2026-10-14 at 4.39.12 PM.jpg",
+            "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv98nl1zmziz.jpg?v=1792050607937",
+            "gid": "id_mv98nl1zmziz"
+          },
+          {
+            "filename": "WhatsApp Image 2026-10-14 at 4.39.13 PM (1).jpg",
+            "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv98nl2r5dfo.jpg?v=1792050610839",
+            "gid": "id_mv98nl2r5dfo"
+          },
+          {
+            "filename": "WhatsApp Image 2026-10-14 at 4.39.13 PM.jpg",
+            "url": "https://raw.githubusercontent.com/darkwebnew/papweldcore-form/main/images/cnc-1-gallery-id_mv98nl3dd7us.jpg?v=1792050613874",
+            "gid": "id_mv98nl3dd7us"
           }
         ]
       },
