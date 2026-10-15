@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:48:32.614Z",
+    "generatedAt": "2026-10-15T07:48:40.243Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -194,7 +194,8 @@
         "Configuration options subject to machine design and the agreed scope of supply."
       ],
       "applications": [
-        "Structural Steel Fabrication"
+        "Structural Steel Fabrication",
+        "Pre-Engineered Buildings (PEB)"
       ],
       "images": {
         "main": {
