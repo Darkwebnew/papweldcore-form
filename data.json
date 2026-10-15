@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:49:49.081Z",
+    "generatedAt": "2026-10-15T08:49:55.291Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -289,7 +289,8 @@
         "Flame-cutting configuration for suitable carbon steel applications.",
         "Stated 3.3 × 12 m cutting area, subject to approved technical specifications.",
         "Supports programmed cutting paths through compatible CNC workflows.",
-        "Adjustable cutting parameters according to material thickness and approved procedures."
+        "Adjustable cutting parameters according to material thickness and approved procedures.",
+        "Designed to support repeatable strip dimensions with proper setup and calibration."
       ],
       "applications": [],
       "images": {
