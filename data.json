@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:49:24.789Z",
+    "generatedAt": "2026-10-15T08:49:29.888Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -285,7 +285,8 @@
       ],
       "keyFeatures": [
         "CNC-controlled gantry movement for programmed straight-line plate cutting.",
-        "Designed for processing large steel plates into specified parallel strips."
+        "Designed for processing large steel plates into specified parallel strips.",
+        "Flame-cutting configuration for suitable carbon steel applications."
       ],
       "applications": [],
       "images": {
