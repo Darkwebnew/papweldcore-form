@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T07:42:10.888Z",
+    "generatedAt": "2026-10-15T07:42:35.259Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -142,7 +142,7 @@
       "shortDescription": "CNC flame and plasma cutting solution for industrial steel fabrication, delivering automated profile cutting, flexible material processing and production efficiency.",
       "description": {
         "paragraph1": "The PAP Weld Core CNC Flame / Plasma Cutting Machine is an industrial CNC-controlled cutting solution designed for metal fabrication, structural steel processing and heavy engineering applications.\n\nCombining computer-controlled motion with flame cutting and/or plasma cutting technology, the system is designed to process metal plates into specified profiles, shapes and components according to digital cutting programs.\n\nThe machine's gantry-based configuration supports controlled movement of the cutting equipment across the work area, helping manufacturers streamline cutting operations, improve dimensional repeatability and reduce reliance on manual marking and cutting.\n\nWith a stated effective cutting area of 3.3 × 12 metres, the machine is suited to large-format plate processing, subject to confirmation of the final machine configuration. Cutting capability depends on the selected process, power source, material type, thickness and operating parameters.\n\nPAP Weld Core Automation Pvt. Ltd. provides industrial machinery solutions designed to meet practical fabrication requirements across structural steel manufacturing, infrastructure, heavy engineering and related industries.",
-        "paragraph2": "",
+        "paragraph2": "1. Digital Drawing and CNC Programming\n\nThe required component profile is prepared using compatible CAD/CAM software and converted into a CNC cutting program.\n\n2. Plate Loading and Positioning\n\nThe metal plate is placed on the cutting table and positioned within the machine's effective working area using the appropriate material-handling arrangements.\n\n3. Process Selection\n\nThe operator selects the suitable cutting process based on the material, thickness, profile requirements and available equipment.\n\nFlame cutting: Uses fuel gas and oxygen to cut suitable ferrous materials, particularly carbon steel, including thicker plates.\n\nPlasma cutting: Uses an electrically conductive, high-temperature plasma arc to cut electrically conductive metals, with capacity depending on the selected plasma power source.\n\n4. CNC-Controlled Cutting\n\nThe gantry and cutting equipment follow the programmed toolpath to produce the required component profile. Appropriate cutting parameters and torch settings are selected according to the material and process.\n\n5. Component Unloading and Inspection\n\nAfter cutting, the components are removed and inspected for dimensional accuracy, edge quality and compliance with the fabrication drawing before moving to subsequent manufacturing operations.\n\nActual operating sequences, cutting performance, supported materials and available automation functions depend on the supplied machine configuration.",
         "paragraph3": ""
       },
       "specifications": [
