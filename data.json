@@ -4,7 +4,7 @@
     "cin": "U25910TN2025PTC180645",
     "gstin": "33AAPCP7917D1Z9",
     "website": "papweld.com",
-    "generatedAt": "2026-10-15T08:50:14.657Z",
+    "generatedAt": "2026-10-15T08:50:19.757Z",
     "totalProducts": 3,
     "totalServices": 0
   },
@@ -295,7 +295,8 @@
         "Configuration, installation, commissioning and training subject to the agreed scope of supply."
       ],
       "applications": [
-        "Structural Steel Fabrication"
+        "Structural Steel Fabrication",
+        "Pre-Engineered Buildings (PEB)"
       ],
       "images": {
         "main": {
